@@ -9,7 +9,7 @@ env:
 jobs:
 
   ubuntu:
-    runs-on: ubuntu-22.04
+    runs-on: self-hosted
 
     steps:
     - name: Checkout
