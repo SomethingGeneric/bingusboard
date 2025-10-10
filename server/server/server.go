@@ -43,9 +43,11 @@ const (
 
 	minSessionExpiryTime = int64(60 * 60 * 24 * 31) // 31 days
 
+	// MattermostAuthMod is the authentication module name for Mattermost integration.
 	MattermostAuthMod = "mattermost"
 )
 
+// Server is the Focalboard server.
 type Server struct {
 	config                 *config.Configuration
 	wsAdapter              ws.Adapter
@@ -68,6 +70,7 @@ type Server struct {
 	app             *app.App
 }
 
+// New creates a new Server instance with the provided parameters.
 func New(params Params) (*Server, error) {
 	if err := params.CheckValid(); err != nil {
 		return nil, err

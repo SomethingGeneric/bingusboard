@@ -15,6 +15,7 @@ const (
 	defaultTemplateVersion = 6 // bump this number to force default templates to be re-imported
 )
 
+// InitTemplates initializes the default board templates if needed.
 func (a *App) InitTemplates() error {
 	_, err := a.initializeTemplates()
 	return err

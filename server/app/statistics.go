@@ -3,6 +3,7 @@
 
 package app
 
+// GetUsedCardsCount returns the number of cards currently in use.
 func (a *App) GetUsedCardsCount() (int, error) {
 	return a.store.GetUsedCardsCount()
 }
