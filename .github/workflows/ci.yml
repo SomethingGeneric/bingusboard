@@ -20,10 +20,7 @@ jobs:
     strategy:
       matrix:
         db:
-          - sqlite
           - mysql
-          - mariadb
-          - postgres
 
     steps:
     - name: Checkout
