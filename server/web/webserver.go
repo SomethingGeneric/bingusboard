@@ -1,3 +1,4 @@
+// Package web provides the web server infrastructure for Focalboard.
 package web
 
 import (
@@ -75,6 +76,7 @@ func NewServer(rootPath string, serverRoot string, port int, ssl, localOnly bool
 	return ws
 }
 
+// Router returns the underlying HTTP router.
 func (ws *Server) Router() *mux.Router {
 	return ws.Handler.(*mux.Router)
 }
@@ -132,6 +134,7 @@ func (ws *Server) Start() {
 	}()
 }
 
+// Shutdown gracefully stops the web server.
 func (ws *Server) Shutdown() error {
 	return ws.Close()
 }

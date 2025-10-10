@@ -9,16 +9,19 @@ import (
 	"github.com/mattermost/focalboard/server/services/auth"
 )
 
+// Authentication constants.
 const (
 	MinimumPasswordLength = 8
 )
 
+// NewErrAuthParam creates a new authentication parameter error.
 func NewErrAuthParam(msg string) *ErrAuthParam {
 	return &ErrAuthParam{
 		msg: msg,
 	}
 }
 
+// ErrAuthParam represents an authentication parameter error.
 type ErrAuthParam struct {
 	msg string
 }
@@ -60,6 +63,7 @@ type LoginResponse struct {
 	Token string `json:"token"`
 }
 
+// LoginResponseFromJSON decodes a LoginResponse from JSON.
 func LoginResponseFromJSON(data io.Reader) (*LoginResponse, error) {
 	var resp LoginResponse
 	if err := json.NewDecoder(data).Decode(&resp); err != nil {
@@ -88,6 +92,7 @@ type RegisterRequest struct {
 	Token string `json:"token"`
 }
 
+// IsValid validates a registration request.
 func (rd *RegisterRequest) IsValid() error {
 	if strings.TrimSpace(rd.Username) == "" {
 		return NewErrAuthParam("username is required")

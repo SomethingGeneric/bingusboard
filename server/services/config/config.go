@@ -6,12 +6,14 @@ import (
 	"github.com/spf13/viper"
 )
 
+// Server configuration constants.
 const (
 	DefaultServerRoot = "http://localhost:8000"
 	DefaultPort       = 8000
 	DBPingAttempts    = 5
 )
 
+// AmazonS3Config contains configuration for Amazon S3 file storage.
 type AmazonS3Config struct {
 	AccessKeyID     string
 	SecretAccessKey string

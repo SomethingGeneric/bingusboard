@@ -11,12 +11,14 @@ import (
 )
 
 const (
+	// Block constraints define size and validation limits.
 	BlockTitleMaxBytes  = 65535                  // Maximum size of a TEXT column in MySQL
 	BlockTitleMaxRunes  = BlockTitleMaxBytes / 4 // Assume a worst-case representation
 	BlockFieldsMaxRunes = 800000
 )
 
 var (
+	// Block validation errors.
 	ErrBlockEmptyBoardID            = errors.New("boardID is empty")
 	ErrBlockTitleSizeLimitExceeded  = errors.New("block title size limit exceeded")
 	ErrBlockFieldsSizeLimitExceeded = errors.New("block fields size limit exceeded")
@@ -132,6 +134,7 @@ type BoardModifier func(board *Board, cache map[string]interface{}) bool
 // Return true to import the block or false to skip import.
 type BlockModifier func(block *Block, cache map[string]interface{}) bool
 
+// BlocksFromJSON decodes blocks from JSON.
 func BlocksFromJSON(data io.Reader) []*Block {
 	var blocks []*Block
 	_ = json.NewDecoder(data).Decode(&blocks)
@@ -205,6 +208,7 @@ func (p *BlockPatch) Patch(block *Block) *Block {
 	return block
 }
 
+// QueryBlocksOptions contains options for querying blocks.
 type QueryBlocksOptions struct {
 	BoardID   string    // if not empty then filter for blocks belonging to specified board
 	ParentID  string    // if not empty then filter for blocks belonging to specified parent
@@ -244,6 +248,7 @@ type QueryBlockHistoryChildOptions struct {
 	PerPage        int   // number of blocks per page (default=-1, meaning unlimited)
 }
 
+// StampModificationMetadata stamps modification metadata on blocks.
 func StampModificationMetadata(userID string, blocks []*Block, auditRec *audit.Record) {
 	if userID == SingleUser {
 		userID = ""
@@ -260,6 +265,7 @@ func StampModificationMetadata(userID string, blocks []*Block, auditRec *audit.R
 	}
 }
 
+// ShouldBeLimited returns true if the block should be limited based on the card limit timestamp.
 func (b *Block) ShouldBeLimited(cardLimitTimestamp int64) bool {
 	return b.Type == TypeCard &&
 		b.UpdateAt < cardLimitTimestamp

@@ -6,10 +6,16 @@ import (
 	"time"
 )
 
+// BoardType represents the visibility type of a board (open or private).
 type BoardType string
+
+// BoardRole represents the role a user has on a board.
 type BoardRole string
+
+// BoardSearchField represents a field that can be searched in boards.
 type BoardSearchField string
 
+// Board type constants define visibility options.
 const (
 	BoardTypeOpen    BoardType = "O"
 	BoardTypePrivate BoardType = "P"
@@ -232,30 +238,35 @@ type BoardMetadata struct {
 	LastModifiedBy string `json:"lastModifiedBy"`
 }
 
+// BoardFromJSON decodes a board from JSON.
 func BoardFromJSON(data io.Reader) *Board {
 	var board *Board
 	_ = json.NewDecoder(data).Decode(&board)
 	return board
 }
 
+// BoardsFromJSON decodes multiple boards from JSON.
 func BoardsFromJSON(data io.Reader) []*Board {
 	var boards []*Board
 	_ = json.NewDecoder(data).Decode(&boards)
 	return boards
 }
 
+// BoardMemberFromJSON decodes a board member from JSON.
 func BoardMemberFromJSON(data io.Reader) *BoardMember {
 	var boardMember *BoardMember
 	_ = json.NewDecoder(data).Decode(&boardMember)
 	return boardMember
 }
 
+// BoardMembersFromJSON decodes multiple board members from JSON.
 func BoardMembersFromJSON(data io.Reader) []*BoardMember {
 	var boardMembers []*BoardMember
 	_ = json.NewDecoder(data).Decode(&boardMembers)
 	return boardMembers
 }
 
+// BoardMetadataFromJSON decodes board metadata from JSON.
 func BoardMetadataFromJSON(data io.Reader) *BoardMetadata {
 	var boardMetadata *BoardMetadata
 	_ = json.NewDecoder(data).Decode(&boardMetadata)
@@ -351,14 +362,17 @@ func (p *BoardPatch) Patch(board *Board) *Board {
 	return board
 }
 
+// IsBoardTypeValid validates a board type.
 func IsBoardTypeValid(t BoardType) bool {
 	return t == BoardTypeOpen || t == BoardTypePrivate
 }
 
+// IsBoardMinimumRoleValid validates a minimum board role.
 func IsBoardMinimumRoleValid(r BoardRole) bool {
 	return r == BoardRoleNone || r == BoardRoleAdmin || r == BoardRoleEditor || r == BoardRoleCommenter || r == BoardRoleViewer
 }
 
+// IsValid validates a board patch.
 func (p *BoardPatch) IsValid() error {
 	if p.Type != nil && !IsBoardTypeValid(*p.Type) {
 		return InvalidBoardErr{"invalid-board-type"}
@@ -371,6 +385,7 @@ func (p *BoardPatch) IsValid() error {
 	return nil
 }
 
+// InvalidBoardErr represents an invalid board error.
 type InvalidBoardErr struct {
 	msg string
 }
@@ -379,6 +394,7 @@ func (ibe InvalidBoardErr) Error() string {
 	return ibe.msg
 }
 
+// IsValid validates a board.
 func (b *Board) IsValid() error {
 	if b.TeamID == "" {
 		return InvalidBoardErr{"empty-team-id"}
@@ -415,6 +431,7 @@ type BoardMemberHistoryEntry struct {
 	InsertAt time.Time `json:"insertAt"`
 }
 
+// BoardSearchFieldFromString converts a string to a BoardSearchField.
 func BoardSearchFieldFromString(field string) (BoardSearchField, error) {
 	switch field {
 	case string(BoardSearchFieldTitle):

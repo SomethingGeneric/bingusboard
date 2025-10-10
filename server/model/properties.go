@@ -152,6 +152,7 @@ func (pd PropDef) GetValue(v interface{}, resolver PropValueResolver) (string, e
 	return fmt.Sprintf("%v", v), nil
 }
 
+// ParseDate parses a date property value.
 func (pd PropDef) ParseDate(s string) (string, error) {
 	// s is a JSON snippet of the form: {"from":1642161600000, "to":1642161600000} in milliseconds UTC
 	// The UI does not yet support date ranges.

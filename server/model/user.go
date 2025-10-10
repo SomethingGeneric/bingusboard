@@ -6,6 +6,7 @@ import (
 )
 
 const (
+	// User constants.
 	SingleUser                    = "single-user"
 	GlobalTeamID                  = "0"
 	SystemUserID                  = "system"
@@ -84,6 +85,7 @@ type UserPreferencesPatch struct {
 	DeletedFields []string `json:"deletedFields"`
 }
 
+// Session represents a user session.
 type Session struct {
 	ID          string                 `json:"id"`
 	Token       string                 `json:"token"`
@@ -94,6 +96,7 @@ type Session struct {
 	UpdateAt    int64                  `json:"update_at,omitempty"`
 }
 
+// UserFromJSON decodes a user from JSON.
 func UserFromJSON(data io.Reader) (*User, error) {
 	var user User
 	if err := json.NewDecoder(data).Decode(&user); err != nil {
@@ -102,6 +105,7 @@ func UserFromJSON(data io.Reader) (*User, error) {
 	return &user, nil
 }
 
+// Sanitize removes sensitive user information.
 func (u *User) Sanitize(options map[string]bool) {
 	u.Password = ""
 	u.MfaSecret = ""
