@@ -19,7 +19,7 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
-// Active server used with shared code (dll)
+// Active server used with shared code (dll).
 var pServer *server.Server
 
 const (
@@ -37,7 +37,7 @@ func isProcessRunning(pid int) bool {
 	return err == nil
 }
 
-// monitorPid is used to keep the server lifetime in sync with another (client app) process
+// monitorPid is used to keep the server lifetime in sync with another (client app) process.
 func monitorPid(pid int, logger *mlog.Logger) {
 	logger.Info("Monitoring PID", mlog.Int("pid", pid))
 

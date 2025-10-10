@@ -122,7 +122,7 @@ func (c *Client) doAPIRequestReader(method, url string, data io.Reader, _ /* eta
 		opt(rq)
 	}
 
-	if c.HTTPHeader != nil && len(c.HTTPHeader) > 0 {
+	if len(c.HTTPHeader) > 0 {
 		for k, v := range c.HTTPHeader {
 			rq.Header.Set(k, v)
 		}
