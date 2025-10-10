@@ -28,12 +28,12 @@ jobs:
     name: plugin
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/setup-go@c0137caad775660c0844396c52da96e560aba63d
-        with:
-          go-version-file: focalboard/server/go.mod
       - uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
         with:
           path: "focalboard"
+      - uses: actions/setup-go@c0137caad775660c0844396c52da96e560aba63d
+        with:
+          go-version-file: focalboard/server/go.mod
       - name: set up golangci-lint
         run: curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin latest
       - name: lint
