@@ -11,21 +11,29 @@ type TestStore struct {
 	license *mmModel.License
 }
 
-func NewTestEnterpriseStore(store store.Store) *TestStore {
+func newTestStoreWithLicense(store store.Store, isEnterprise bool) *TestStore {
 	usersValue := 10000
 	trueValue := true
 	falseValue := false
+
+	// Enterprise features that differ from Professional
+	ldapEnabled := isEnterprise
+	complianceEnabled := isEnterprise
+	clusterEnabled := isEnterprise
+	enterprisePluginsEnabled := isEnterprise
+	remoteClusterEnabled := isEnterprise
+
 	license := &mmModel.License{
 		Features: &mmModel.Features{
 			Users:                     &usersValue,
-			LDAP:                      &trueValue,
-			LDAPGroups:                &trueValue,
+			LDAP:                      &ldapEnabled,
+			LDAPGroups:                &ldapEnabled,
 			MFA:                       &trueValue,
 			GoogleOAuth:               &trueValue,
 			Office365OAuth:            &trueValue,
 			OpenId:                    &trueValue,
-			Compliance:                &trueValue,
-			Cluster:                   &trueValue,
+			Compliance:                &complianceEnabled,
+			Cluster:                   &clusterEnabled,
 			Metrics:                   &trueValue,
 			MHPNS:                     &trueValue,
 			SAML:                      &trueValue,
@@ -41,68 +49,27 @@ func NewTestEnterpriseStore(store store.Store) *TestStore {
 			GuestAccountsPermissions:  &trueValue,
 			IDLoadedPushNotifications: &trueValue,
 			LockTeammateNameDisplay:   &trueValue,
-			EnterprisePlugins:         &trueValue,
+			EnterprisePlugins:         &enterprisePluginsEnabled,
 			AdvancedLogging:           &trueValue,
 			Cloud:                     &falseValue,
 			SharedChannels:            &trueValue,
-			RemoteClusterService:      &trueValue,
+			RemoteClusterService:      &remoteClusterEnabled,
 			FutureFeatures:            &trueValue,
 		},
 	}
 
-	testStore := &TestStore{
+	return &TestStore{
 		Store:   store,
 		license: license,
 	}
+}
 
-	return testStore
+func NewTestEnterpriseStore(store store.Store) *TestStore {
+	return newTestStoreWithLicense(store, true)
 }
 
 func NewTestProfessionalStore(store store.Store) *TestStore {
-	usersValue := 10000
-	trueValue := true
-	falseValue := false
-	license := &mmModel.License{
-		Features: &mmModel.Features{
-			Users:                     &usersValue,
-			LDAP:                      &falseValue,
-			LDAPGroups:                &falseValue,
-			MFA:                       &trueValue,
-			GoogleOAuth:               &trueValue,
-			Office365OAuth:            &trueValue,
-			OpenId:                    &trueValue,
-			Compliance:                &falseValue,
-			Cluster:                   &falseValue,
-			Metrics:                   &trueValue,
-			MHPNS:                     &trueValue,
-			SAML:                      &trueValue,
-			Elasticsearch:             &trueValue,
-			Announcement:              &trueValue,
-			ThemeManagement:           &trueValue,
-			EmailNotificationContents: &trueValue,
-			DataRetention:             &trueValue,
-			MessageExport:             &trueValue,
-			CustomPermissionsSchemes:  &trueValue,
-			CustomTermsOfService:      &trueValue,
-			GuestAccounts:             &trueValue,
-			GuestAccountsPermissions:  &trueValue,
-			IDLoadedPushNotifications: &trueValue,
-			LockTeammateNameDisplay:   &trueValue,
-			EnterprisePlugins:         &falseValue,
-			AdvancedLogging:           &trueValue,
-			Cloud:                     &falseValue,
-			SharedChannels:            &trueValue,
-			RemoteClusterService:      &falseValue,
-			FutureFeatures:            &trueValue,
-		},
-	}
-
-	testStore := &TestStore{
-		Store:   store,
-		license: license,
-	}
-
-	return testStore
+	return newTestStoreWithLicense(store, false)
 }
 
 func (s *TestStore) GetLicense() *mmModel.License {
