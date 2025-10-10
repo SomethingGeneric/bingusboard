@@ -63,7 +63,7 @@ func (s *SQLStore) getCardLimitTimestamp(db sq.BaseRunner) (int64, error) {
 
 	var result string
 	err := scanner.Scan(&result)
-	if errors.Is(sql.ErrNoRows, err) {
+	if errors.Is(err, sql.ErrNoRows) {
 		return 0, nil
 	}
 	if err != nil {

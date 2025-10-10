@@ -992,7 +992,7 @@ func (s *MattermostAuthLayer) GetMemberForBoard(boardID, userID string) (*model.
 			return nil, model.NewErrNotFound("user is a guest")
 		}
 
-		b, boardErr := s.Store.GetBoard(boardID)
+		b, boardErr := s.GetBoard(boardID)
 		if boardErr != nil {
 			return nil, boardErr
 		}
@@ -1163,7 +1163,7 @@ func (s *MattermostAuthLayer) GetBoardsForUserAndTeam(userID, teamID string, inc
 		boardIDs = append(boardIDs, m.BoardID)
 	}
 
-	boards, err := s.Store.GetBoardsInTeamByIds(boardIDs, teamID)
+	boards, err := s.GetBoardsInTeamByIds(boardIDs, teamID)
 	if model.IsErrNotFound(err) {
 		if boards == nil {
 			boards = []*model.Board{}
