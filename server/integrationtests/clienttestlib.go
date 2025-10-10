@@ -73,7 +73,7 @@ type TestHelper struct {
 
 type FakePermissionPluginAPI struct{}
 
-func (*FakePermissionPluginAPI) HasPermissionTo(userID string, permission *mmModel.Permission) bool {
+func (*FakePermissionPluginAPI) HasPermissionTo(userID string, _ *mmModel.Permission) bool {
 	return userID == userAdmin
 }
 
@@ -90,7 +90,7 @@ func (*FakePermissionPluginAPI) HasPermissionToTeam(userID string, teamID string
 	return true
 }
 
-func (*FakePermissionPluginAPI) HasPermissionToChannel(userID string, channelID string, permission *mmModel.Permission) bool {
+func (*FakePermissionPluginAPI) HasPermissionToChannel(_ string, channelID string, _ *mmModel.Permission) bool {
 	return channelID == "valid-channel-id" || channelID == "valid-channel-id-2"
 }
 

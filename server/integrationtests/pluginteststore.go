@@ -127,7 +127,7 @@ func (s *PluginTestStore) GetUserByID(userID string) (*model.User, error) {
 	return user, nil
 }
 
-func (s *PluginTestStore) GetUsersList(userIDs []string, showEmail, showName bool) ([]*model.User, error) {
+func (s *PluginTestStore) GetUsersList(userIDs []string, _, _ bool) ([]*model.User, error) {
 	var users []*model.User
 	for _, id := range userIDs {
 		user := s.users[id]
@@ -169,7 +169,7 @@ func (s *PluginTestStore) GetUserPreferences(userID string) (mmModel.Preferences
 	return nil, errTestStore
 }
 
-func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, showEmail, showName bool) ([]*model.User, error) {
+func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, _, _ bool) ([]*model.User, error) {
 	if asGuestID == "guest" {
 		return []*model.User{
 			s.users["viewer"],
@@ -248,7 +248,7 @@ func (s *PluginTestStore) CanSeeUser(seerID string, seenID string) (bool, error)
 	return false, nil
 }
 
-func (s *PluginTestStore) SearchUserChannels(teamID, userID, query string) ([]*mmModel.Channel, error) {
+func (s *PluginTestStore) SearchUserChannels(teamID, _ string, query string) ([]*mmModel.Channel, error) {
 	return []*mmModel.Channel{
 		{
 			TeamId:      teamID,

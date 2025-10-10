@@ -152,7 +152,7 @@ func (a *API) handleArchiveImport(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%v", err)
 		return
 	}
-	defer file.Close()
+	defer func() { _ = file.Close() }()
 
 	auditRec := a.makeAuditRecord(r, "import", audit.Fail)
 	defer a.audit.LogRecord(audit.LevelModify, auditRec)

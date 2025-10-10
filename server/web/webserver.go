@@ -86,7 +86,7 @@ func (ws *Server) AddRoutes(rs RoutedService) {
 
 func (ws *Server) registerRoutes() {
 	ws.Router().PathPrefix("/static").Handler(http.StripPrefix(ws.basePrefix+"/static/", http.FileServer(http.Dir(filepath.Join(ws.rootPath, "static")))))
-	ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		indexTemplate, err := template.New("index").ParseFiles(path.Join(ws.rootPath, "index.html"))
 		if err != nil {
