@@ -384,7 +384,7 @@ func (s *SQLStore) getUserPreferences(db sq.BaseRunner, userID string) (mmModel.
 		return nil, err
 	}
 
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	preferences, err := s.preferencesFromRows(rows)
 	if err != nil {

@@ -253,7 +253,7 @@ func (s *SQLStore) getFocalBoardTableNames() ([]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error fetching FocalBoard table names: %w", err)
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	names := make([]string, 0)
 
