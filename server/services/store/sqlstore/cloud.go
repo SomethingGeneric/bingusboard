@@ -32,7 +32,7 @@ func (s *SQLStore) activeCardsQuery(builder sq.StatementBuilderType, selectStr s
 	if cardLimit != 0 {
 		query = query.
 			Limit(1).
-			Offset(uint64(cardLimit - 1))
+			Offset(uint64(cardLimit - 1)) //nolint:gosec // card limit is a controlled value
 	}
 
 	return query

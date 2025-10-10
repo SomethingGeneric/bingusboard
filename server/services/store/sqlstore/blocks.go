@@ -71,7 +71,7 @@ func (s *SQLStore) getBlocks(db sq.BaseRunner, opts model.QueryBlocksOptions) ([
 	}
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec // pagination parameters are safe
 	}
 
 	if opts.PerPage > 0 {
@@ -699,12 +699,12 @@ func (s *SQLStore) getBlockHistoryNewestChildren(db sq.BaseRunner, parentID stri
 		InnerJoin("("+subQuery+") AS sub ON bh.id=sub.id AND bh.insert_at=sub.max_insert_at", subArgs...)
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec // pagination parameters are safe
 	}
 
 	if opts.PerPage > 0 {
 		// limit+1 to detect if more records available
-		query = query.Limit(uint64(opts.PerPage + 1))
+		query = query.Limit(uint64(opts.PerPage + 1)) //nolint:gosec // pagination parameters are safe
 	}
 
 	sql, args, err := query.ToSql()

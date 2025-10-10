@@ -108,7 +108,7 @@ func build(cfg appConfig) (err error) {
 
 func getVersionFile(cfg appConfig) ([]byte, error) {
 	path := filepath.Join(cfg.dir, versionFilename)
-	buf, err := os.ReadFile(path)
+	buf, err := os.ReadFile(path) //nolint:gosec // path is from controlled config directory
 	if err != nil {
 		return nil, fmt.Errorf("cannot read %s: %w", path, err)
 	}
@@ -159,7 +159,7 @@ func writeBoard(w *zip.Writer, boardID string, cfg appConfig) error {
 }
 
 func writeFile(w *zip.Writer, srcPath string, destPath string, cfg appConfig) (err error) {
-	inFile, err := os.Open(srcPath)
+	inFile, err := os.Open(srcPath) //nolint:gosec // path is from controlled template directory
 	if err != nil {
 		return fmt.Errorf("error reading %s: %w", srcPath, err)
 	}
