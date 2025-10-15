@@ -103,7 +103,7 @@ func (s *SQLStore) Migrate() error {
 
 		defer func() {
 			s.logger.Debug("Closing migrations connection")
-			db.Close()
+			_ = db.Close()
 		}()
 	}
 
@@ -189,7 +189,7 @@ func (s *SQLStore) Migrate() error {
 	}
 	defer func() {
 		s.logger.Debug("Closing migration engine")
-		engine.Close()
+		_ = engine.Close()
 	}()
 
 	return s.runMigrationSequence(engine, driver)

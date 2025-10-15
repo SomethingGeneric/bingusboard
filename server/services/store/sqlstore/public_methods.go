@@ -453,8 +453,8 @@ func (s *SQLStore) GetSystemSettings() (map[string]string, error) {
 	return s.getSystemSettings(s.db)
 }
 
-func (s *SQLStore) GetTeam(ID string) (*model.Team, error) {
-	return s.getTeam(s.db, ID)
+func (s *SQLStore) GetTeam(id string) (*model.Team, error) {
+	return s.getTeam(s.db, id)
 }
 
 func (s *SQLStore) GetTeamCount() (int64, error) {

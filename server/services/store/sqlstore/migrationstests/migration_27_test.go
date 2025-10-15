@@ -7,6 +7,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const trueString = "true"
+
 func Test27MigrateUserPropsToPreferences(t *testing.T) {
 	t.Run("should correctly migrate properties on personal server and desktop", func(t *testing.T) {
 		th, tearDown := SetupTestHelper(t)
@@ -79,7 +81,7 @@ func Test27MigrateUserPropsToPreferences(t *testing.T) {
 		// the checks for true or 1 make the test work for all DBs,
 		// that were representing the boolean values in the JSON
 		// struct in different ways
-		require.True(t, welcomePageViewedValue == "true" || welcomePageViewedValue == "1")
+		require.True(t, welcomePageViewedValue == trueString || welcomePageViewedValue == "1")
 
 		hiddenBoardIDsValue := getValue("hiddenBoardIDs")
 		require.Contains(t, hiddenBoardIDsValue, "board1")
@@ -88,10 +90,10 @@ func Test27MigrateUserPropsToPreferences(t *testing.T) {
 		require.Equal(t, "onboarding", getValue("tourCategory"))
 
 		onboardingTourStepValue := getValue("onboardingTourStep")
-		require.True(t, onboardingTourStepValue == "true" || onboardingTourStepValue == "1")
+		require.True(t, onboardingTourStepValue == trueString || onboardingTourStepValue == "1")
 
 		onboardingTourStartedValue := getValue("onboardingTourStarted")
-		require.True(t, onboardingTourStartedValue == "true" || onboardingTourStartedValue == "1")
+		require.True(t, onboardingTourStartedValue == trueString || onboardingTourStartedValue == "1")
 
 		version72MessageCanceledValue := getValue("version72MessageCanceled")
 		require.True(t, version72MessageCanceledValue == "true" || version72MessageCanceledValue == "1")

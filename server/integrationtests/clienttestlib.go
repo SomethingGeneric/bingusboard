@@ -263,7 +263,7 @@ func newTestServerLocalMode() *server.Server {
 
 func SetupTestHelperWithToken(t *testing.T) *TestHelper {
 	origUnitTesting := os.Getenv("FOCALBOARD_UNIT_TESTING")
-	os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
+	_ = os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
 
 	sessionToken := "TESTTOKEN"
 
@@ -284,7 +284,7 @@ func SetupTestHelper(t *testing.T) *TestHelper {
 
 func SetupTestHelperPluginMode(t *testing.T) *TestHelper {
 	origUnitTesting := os.Getenv("FOCALBOARD_UNIT_TESTING")
-	os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
+	_ = os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
 
 	th := &TestHelper{
 		T:                  t,
@@ -298,7 +298,7 @@ func SetupTestHelperPluginMode(t *testing.T) *TestHelper {
 
 func SetupTestHelperLocalMode(t *testing.T) *TestHelper {
 	origUnitTesting := os.Getenv("FOCALBOARD_UNIT_TESTING")
-	os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
+	_ = os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
 
 	th := &TestHelper{
 		T:                  t,
@@ -312,7 +312,7 @@ func SetupTestHelperLocalMode(t *testing.T) *TestHelper {
 
 func SetupTestHelperWithLicense(t *testing.T, licenseType LicenseType) *TestHelper {
 	origUnitTesting := os.Getenv("FOCALBOARD_UNIT_TESTING")
-	os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
+	_ = os.Setenv("FOCALBOARD_UNIT_TESTING", "1")
 
 	th := &TestHelper{
 		T:                  t,
@@ -343,7 +343,7 @@ func (th *TestHelper) Start() *TestHelper {
 			time.Sleep(100 * time.Millisecond)
 			continue
 		}
-		resp.Body.Close()
+		_ = resp.Body.Close()
 
 		// Currently returns 404
 		// if resp.StatusCode != http.StatusOK {
@@ -386,7 +386,7 @@ func (th *TestHelper) InitBasic() *TestHelper {
 var ErrRegisterFail = errors.New("register failed")
 
 func (th *TestHelper) TearDown() {
-	os.Setenv("FOCALBOARD_UNIT_TESTING", th.origEnvUnitTesting)
+	_ = os.Setenv("FOCALBOARD_UNIT_TESTING", th.origEnvUnitTesting)
 
 	logger := th.Server.Logger()
 
@@ -399,7 +399,7 @@ func (th *TestHelper) TearDown() {
 		panic(err)
 	}
 
-	os.RemoveAll(th.Server.Config().FilesPath)
+	_ = os.RemoveAll(th.Server.Config().FilesPath)
 
 	if err := os.Remove(th.Server.Config().DBConfigString); err == nil {
 		logger.Debug("Removed test database", mlog.String("file", th.Server.Config().DBConfigString))

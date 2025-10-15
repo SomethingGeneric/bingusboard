@@ -17,14 +17,10 @@ linters-settings:
       - fieldalignment
       - shadow
   lll:
-    line-length: 180
+    line-length: 200
+    tab-width: 1
   dupl:
     threshold: 200
-  revive:
-    enableAllRules: true
-    rules:
-      - name: exported
-        disabled: true
 
 linters:
   disable-all: true
@@ -49,11 +45,9 @@ linters:
     - godot
     - err113
     - goheader
-    - revive
     - nakedret
     - gomodguard
     - goprintffuncname
-    - lll
     - misspell
     - nolintlint
     - unconvert

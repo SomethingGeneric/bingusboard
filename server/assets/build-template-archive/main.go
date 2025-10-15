@@ -49,7 +49,7 @@ func main() {
 		code = -1
 		fmt.Fprintf(os.Stderr, "error creating archive: %v\n", err)
 	} else if cfg.verbose {
-		fmt.Fprintf(os.Stdout, "archive created: %s\n", cfg.out)
+		_, _ = fmt.Fprintf(os.Stdout, "archive created: %s\n", cfg.out)
 	}
 
 	os.Exit(code)
@@ -97,7 +97,7 @@ func build(cfg appConfig) (err error) {
 	for _, f := range files {
 		if !f.IsDir() {
 			if f.Name() != versionFilename && cfg.verbose {
-				fmt.Fprintf(os.Stdout, "skipping non-directory %s\n", f.Name())
+				_, _ = fmt.Fprintf(os.Stdout, "skipping non-directory %s\n", f.Name())
 			}
 			continue
 		}
@@ -143,7 +143,7 @@ func writeBoard(w *zip.Writer, boardID string, cfg appConfig) error {
 	for _, f := range files {
 		if f.IsDir() {
 			if cfg.verbose {
-				fmt.Fprintf(os.Stdout, "skipping directory %s\n", f.Name())
+				_, _ = fmt.Fprintf(os.Stdout, "skipping directory %s\n", f.Name())
 			}
 			continue
 		}
@@ -165,7 +165,7 @@ func writeFile(w *zip.Writer, srcPath string, destPath string, cfg appConfig) (e
 	if err != nil {
 		return fmt.Errorf("error reading %s: %w", srcPath, err)
 	}
-	defer inFile.Close()
+	defer func() { _ = inFile.Close() }()
 
 	outFile, err := w.Create(destPath)
 	if err != nil {
@@ -177,7 +177,7 @@ func writeFile(w *zip.Writer, srcPath string, destPath string, cfg appConfig) (e
 	}
 
 	if cfg.verbose {
-		fmt.Fprintf(os.Stdout, "%s written (%d bytes)\n", destPath, size)
+		_, _ = fmt.Fprintf(os.Stdout, "%s written (%d bytes)\n", destPath, size)
 	}
 
 	return nil

@@ -149,7 +149,7 @@ func (a *API) handleArchiveImport(w http.ResponseWriter, r *http.Request) {
 
 	file, handle, err := r.FormFile(UploadFormFileKey)
 	if err != nil {
-		fmt.Fprintf(w, "%v", err)
+		_, _ = fmt.Fprintf(w, "%v", err)
 		return
 	}
 	defer func() { _ = file.Close() }()
