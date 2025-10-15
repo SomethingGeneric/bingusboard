@@ -6,12 +6,15 @@ import (
 )
 
 const (
+	// Subscription type constants.
 	SubTypeUser    = "user"
 	SubTypeChannel = "channel"
 )
 
+// SubscriberType represents the type of subscriber.
 type SubscriberType string
 
+// IsValid validates a subscriber type.
 func (st SubscriberType) IsValid() bool {
 	switch st {
 	case SubTypeUser, SubTypeChannel:
@@ -52,6 +55,7 @@ type Subscription struct {
 	DeleteAt int64 `json:"deleteAt"`
 }
 
+// IsValid validates a subscription.
 func (s *Subscription) IsValid() error {
 	if s == nil {
 		return ErrInvalidSubscription{"cannot be nil"}
@@ -71,6 +75,7 @@ func (s *Subscription) IsValid() error {
 	return nil
 }
 
+// SubscriptionFromJSON decodes a subscription from JSON.
 func SubscriptionFromJSON(data io.Reader) (*Subscription, error) {
 	var subscription Subscription
 	if err := json.NewDecoder(data).Decode(&subscription); err != nil {
@@ -79,6 +84,7 @@ func SubscriptionFromJSON(data io.Reader) (*Subscription, error) {
 	return &subscription, nil
 }
 
+// ErrInvalidSubscription represents an invalid subscription error.
 type ErrInvalidSubscription struct {
 	msg string
 }

@@ -20,6 +20,7 @@ const (
 	Delete Action = "delete"
 )
 
+// BlockChangeEvent represents a block change event for notifications.
 type BlockChangeEvent struct {
 	Action       Action
 	TeamID       string

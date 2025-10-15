@@ -1,3 +1,5 @@
+// Package assets provides embedded static assets for the application.
+
 package assets
 
 import (

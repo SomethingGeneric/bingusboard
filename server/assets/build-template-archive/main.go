@@ -1,3 +1,5 @@
+// Package main generates template archives from template directories.
+
 package main
 
 import (

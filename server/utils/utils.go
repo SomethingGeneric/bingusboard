@@ -9,8 +9,10 @@ import (
 	mmModel "github.com/mattermost/mattermost/server/public/model"
 )
 
+// IDType represents the type of an ID.
 type IDType byte
 
+// ID type constants.
 const (
 	IDTypeNone       IDType = '7'
 	IDTypeTeam       IDType = 't'
@@ -24,7 +26,7 @@ const (
 	IDTypeAttachment IDType = 'i'
 )
 
-// NewId is a globally unique identifier.  It is a [A-Z0-9] string 27
+// NewID is a globally unique identifier.  It is a [A-Z0-9] string 27
 // characters long.  It is a UUID version 4 Guid that is zbased32 encoded
 // with the padding stripped off, and a one character alpha prefix indicating the
 // type of entity or a `7` if unknown type.
@@ -52,6 +54,7 @@ func SecondsToMillis(seconds int64) int64 {
 	return seconds * 1000
 }
 
+// StructToMap converts a struct to a map.
 func StructToMap(v interface{}) (m map[string]interface{}) {
 	b, _ := json.Marshal(v)
 	_ = json.Unmarshal(b, &m)
@@ -79,6 +82,7 @@ func intersection(a []interface{}, b []interface{}) []interface{} {
 	return set
 }
 
+// Intersection returns the intersection of multiple slices.
 func Intersection(x ...[]interface{}) []interface{} {
 	if len(x) == 0 {
 		return nil
@@ -98,6 +102,7 @@ func Intersection(x ...[]interface{}) []interface{} {
 	return result
 }
 
+// IsCloudLicense checks if a license is a cloud license.
 func IsCloudLicense(license *mmModel.License) bool {
 	return license != nil &&
 		license.Features != nil &&
@@ -105,6 +110,7 @@ func IsCloudLicense(license *mmModel.License) bool {
 		*license.Features.Cloud
 }
 
+// DedupeStringArr removes duplicate strings from a slice.
 func DedupeStringArr(arr []string) []string {
 	hashMap := map[string]bool{}
 
@@ -122,6 +128,7 @@ func DedupeStringArr(arr []string) []string {
 	return dedupedArr
 }
 
+// GetBaseFilePath returns the base file path for the application.
 func GetBaseFilePath() string {
 	return path.Join("boards", time.Now().Format("20060102"))
 }

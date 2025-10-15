@@ -8,12 +8,15 @@ import (
 	"github.com/rivo/uniseg"
 )
 
+// Card operation errors.
 var ErrBoardIDMismatch = errors.New("Board IDs do not match")
 
+// ErrInvalidCard represents an invalid card error.
 type ErrInvalidCard struct {
 	msg string
 }
 
+// NewErrInvalidCard creates a new invalid card error.
 func NewErrInvalidCard(msg string) ErrInvalidCard {
 	return ErrInvalidCard{
 		msg: msg,
@@ -21,11 +24,13 @@ func NewErrInvalidCard(msg string) ErrInvalidCard {
 }
 
 func (e ErrInvalidCard) Error() string {
+	// ErrNotCardBlock indicates a block is not a card type.
 	return fmt.Sprintf("invalid card, %s", e.msg)
 }
 
 var ErrNotCardBlock = errors.New("not a card block")
 
+// ErrInvalidFieldType represents an invalid field type error.
 type ErrInvalidFieldType struct {
 	field string
 }
@@ -106,6 +111,7 @@ func (c *Card) Populate() {
 	}
 }
 
+// PopulateWithBoardID populates the card block with board ID.
 func (c *Card) PopulateWithBoardID(boardID string) {
 	c.BoardID = boardID
 	c.Populate()
