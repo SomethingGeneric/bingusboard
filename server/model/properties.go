@@ -14,12 +14,15 @@ import (
 	"github.com/mattermost/focalboard/server/utils"
 )
 
-var ErrInvalidBoardBlock = errors.New("invalid board block")
-var ErrInvalidPropSchema = errors.New("invalid property schema")
-var ErrInvalidProperty = errors.New("invalid property")
-var ErrInvalidPropertyValue = errors.New("invalid property value")
-var ErrInvalidPropertyValueType = errors.New("invalid property value type")
-var ErrInvalidDate = errors.New("invalid date property")
+// Property validation errors.
+var (
+	ErrInvalidBoardBlock        = errors.New("invalid board block")
+	ErrInvalidPropSchema        = errors.New("invalid property schema")
+	ErrInvalidProperty          = errors.New("invalid property")
+	ErrInvalidPropertyValue     = errors.New("invalid property value")
+	ErrInvalidPropertyValueType = errors.New("invalid property value type")
+	ErrInvalidDate              = errors.New("invalid date property")
+)
 
 // PropValueResolver allows PropDef.GetValue to further decode property values, such as
 // looking up usernames from ids.
@@ -152,6 +155,7 @@ func (pd PropDef) GetValue(v interface{}, resolver PropValueResolver) (string, e
 	return fmt.Sprintf("%v", v), nil
 }
 
+// ParseDate parses a date property value.
 func (pd PropDef) ParseDate(s string) (string, error) {
 	// s is a JSON snippet of the form: {"from":1642161600000, "to":1642161600000} in milliseconds UTC
 	// The UI does not yet support date ranges.

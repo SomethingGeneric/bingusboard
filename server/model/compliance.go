@@ -64,12 +64,14 @@ type BlockHistory struct {
 	LastModifiedBy string `json:"lastModifiedBy"`
 }
 
+// QueryBoardsForComplianceOptions contains options for querying boards for compliance.
 type QueryBoardsForComplianceOptions struct {
 	TeamID  string // if not empty then filter for specific team, otherwise all teams are included
 	Page    int    // page number to select when paginating
 	PerPage int    // number of blocks per page (default=60)
 }
 
+// QueryBoardsComplianceHistoryOptions contains options for querying board history for compliance.
 type QueryBoardsComplianceHistoryOptions struct {
 	ModifiedSince  int64  // if non-zero then filter for records with update_at greater than ModifiedSince
 	IncludeDeleted bool   // if true then deleted blocks are included
@@ -78,6 +80,7 @@ type QueryBoardsComplianceHistoryOptions struct {
 	PerPage        int    // number of blocks per page (default=60)
 }
 
+// QueryBlocksComplianceHistoryOptions contains options for querying block history for compliance.
 type QueryBlocksComplianceHistoryOptions struct {
 	ModifiedSince  int64  // if non-zero then filter for records with update_at greater than ModifiedSince
 	IncludeDeleted bool   // if true then deleted blocks are included

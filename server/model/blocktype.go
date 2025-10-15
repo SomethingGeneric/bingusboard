@@ -13,6 +13,7 @@ import (
 // BlockType represents a block type.
 type BlockType string
 
+// Block type constants define the different types of blocks available in Focalboard.
 const (
 	TypeUnknown    = "unknown"
 	TypeBoard      = "board"

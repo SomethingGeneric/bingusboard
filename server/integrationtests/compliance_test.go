@@ -18,7 +18,7 @@ var (
 )
 
 func setupTestHelperForCompliance(t *testing.T, complianceLicense bool) (*TestHelper, Clients) {
-	os.Setenv("FOCALBOARD_UNIT_TESTING_COMPLIANCE", strconv.FormatBool(complianceLicense))
+	_ = os.Setenv("FOCALBOARD_UNIT_TESTING_COMPLIANCE", strconv.FormatBool(complianceLicense))
 
 	th := SetupTestHelperPluginMode(t)
 	clients := setupClients(th)
@@ -269,47 +269,38 @@ func TestGetBlocksComplianceHistory(t *testing.T) {
 		require.Nil(t, bchr)
 	})
 
-	t.Run("good call, exclude deleted", func(t *testing.T) {
-		th, clients := setupTestHelperForCompliance(t, true)
-		defer th.TearDown()
+	testCases := []struct {
+		name           string
+		includeDeleted bool
+		expectedCount  int
+		comment        string
+	}{
+		{"good call, exclude deleted", false, 8, "2 blocks deleted"},
+		{"good call, include deleted", true, 12, "both deleted boards have 2 history records each"},
+	}
 
-		const count = 10
-		board, cards := th.CreateBoardAndCards(testTeamID, model.BoardTypeOpen, count)
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			th, clients := setupTestHelperForCompliance(t, true)
+			defer th.TearDown()
 
-		deleted, resp := th.Client.DeleteBlock(board.ID, cards[0].ID, true)
-		th.CheckOK(resp)
-		require.True(t, deleted)
+			const count = 10
+			board, cards := th.CreateBoardAndCards(testTeamID, model.BoardTypeOpen, count)
 
-		deleted, resp = th.Client.DeleteBlock(board.ID, cards[1].ID, true)
-		th.CheckOK(resp)
-		require.True(t, deleted)
+			deleted, resp := th.Client.DeleteBlock(board.ID, cards[0].ID, true)
+			th.CheckOK(resp)
+			require.True(t, deleted)
 
-		bchr, resp := clients.Admin.GetBlocksComplianceHistory(utils.GetMillis()-OneDay, false, testTeamID, board.ID, 0, 0)
-		th.CheckOK(resp)
-		require.False(t, bchr.HasNext)
-		require.Len(t, bchr.Results, count-2) // 2 blocks deleted
-	})
+			deleted, resp = th.Client.DeleteBlock(board.ID, cards[1].ID, true)
+			th.CheckOK(resp)
+			require.True(t, deleted)
 
-	t.Run("good call, include deleted", func(t *testing.T) {
-		th, clients := setupTestHelperForCompliance(t, true)
-		defer th.TearDown()
-
-		const count = 10
-		board, cards := th.CreateBoardAndCards(testTeamID, model.BoardTypeOpen, count)
-
-		deleted, resp := th.Client.DeleteBlock(board.ID, cards[0].ID, true)
-		th.CheckOK(resp)
-		require.True(t, deleted)
-
-		deleted, resp = th.Client.DeleteBlock(board.ID, cards[1].ID, true)
-		th.CheckOK(resp)
-		require.True(t, deleted)
-
-		bchr, resp := clients.Admin.GetBlocksComplianceHistory(utils.GetMillis()-OneDay, true, testTeamID, board.ID, 0, 0)
-		th.CheckOK(resp)
-		require.False(t, bchr.HasNext)
-		require.Len(t, bchr.Results, count+2) // both deleted boards have 2 history records each
-	})
+			bchr, resp := clients.Admin.GetBlocksComplianceHistory(utils.GetMillis()-OneDay, tc.includeDeleted, testTeamID, board.ID, 0, 0)
+			th.CheckOK(resp)
+			require.False(t, bchr.HasNext)
+			require.Len(t, bchr.Results, tc.expectedCount) // comment: tc.comment
+		})
+	}
 
 	t.Run("pagination", func(t *testing.T) {
 		th, clients := setupTestHelperForCompliance(t, true)

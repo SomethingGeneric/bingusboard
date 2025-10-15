@@ -11,12 +11,14 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
+// BoardsAndBlocks validation errors.
 var ErrNoBoardsInBoardsAndBlocks = errors.New("at least one board is required")
 var ErrNoBlocksInBoardsAndBlocks = errors.New("at least one block is required")
 var ErrNoTeamInBoardsAndBlocks = errors.New("team ID cannot be empty")
 var ErrBoardIDsAndPatchesMissmatchInBoardsAndBlocks = errors.New("board ids and patches need to match")
 var ErrBlockIDsAndPatchesMissmatchInBoardsAndBlocks = errors.New("block ids and patches need to match")
 
+// BlockDoesntBelongToAnyBoardErr indicates a block does not belong to any board.
 type BlockDoesntBelongToAnyBoardErr struct {
 	blockID string
 }
@@ -38,6 +40,7 @@ type BoardsAndBlocks struct {
 	Blocks []*Block `json:"blocks"`
 }
 
+// IsValid validates a BoardsAndBlocks structure.
 func (bab *BoardsAndBlocks) IsValid() error {
 	if len(bab.Boards) == 0 {
 		return ErrNoBoardsInBoardsAndBlocks
@@ -73,6 +76,7 @@ type DeleteBoardsAndBlocks struct {
 	Blocks []string `json:"blocks"`
 }
 
+// NewDeleteBoardsAndBlocksFromBabs creates a DeleteBoardsAndBlocks from a BoardsAndBlocks.
 func NewDeleteBoardsAndBlocksFromBabs(babs *BoardsAndBlocks) *DeleteBoardsAndBlocks {
 	boardIDs := make([]string, 0, len(babs.Boards))
 	blockIDs := make([]string, 0, len(babs.Boards))
@@ -89,6 +93,7 @@ func NewDeleteBoardsAndBlocksFromBabs(babs *BoardsAndBlocks) *DeleteBoardsAndBlo
 	}
 }
 
+// IsValid validates a DeleteBoardsAndBlocks structure.
 func (dbab *DeleteBoardsAndBlocks) IsValid() error {
 	if len(dbab.Boards) == 0 {
 		return ErrNoBoardsInBoardsAndBlocks

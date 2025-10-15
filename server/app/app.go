@@ -30,6 +30,7 @@ type servicesAPI interface {
 	GetUsersFromProfiles(options *mm_model.UserGetOptions) ([]*mm_model.User, error)
 }
 
+// ReadCloseSeeker is an interface for reading and seeking with close capability.
 type ReadCloseSeeker = filestore.ReadCloseSeeker
 
 type fileBackend interface {
@@ -41,6 +42,7 @@ type fileBackend interface {
 	RemoveFile(path string) error
 }
 
+// Services provides the dependencies required by the App.
 type Services struct {
 	Auth             *auth.Auth
 	Store            store.Store
@@ -54,6 +56,7 @@ type Services struct {
 	ServicesAPI      servicesAPI
 }
 
+// App represents the application layer of Focalboard.
 type App struct {
 	config              *config.Configuration
 	store               store.Store
@@ -72,14 +75,17 @@ type App struct {
 	cardLimit    int
 }
 
+// SetConfig updates the application configuration.
 func (a *App) SetConfig(config *config.Configuration) {
 	a.config = config
 }
 
+// GetConfig returns the current application configuration.
 func (a *App) GetConfig() *config.Configuration {
 	return a.config
 }
 
+// New creates a new App instance with the provided configuration and services.
 func New(config *config.Configuration, wsAdapter ws.Adapter, services Services) *App {
 	app := &App{
 		config:              config,
@@ -99,12 +105,14 @@ func New(config *config.Configuration, wsAdapter ws.Adapter, services Services) 
 	return app
 }
 
+// CardLimit returns the current card limit for the application.
 func (a *App) CardLimit() int {
 	a.cardLimitMux.RLock()
 	defer a.cardLimitMux.RUnlock()
 	return a.cardLimit
 }
 
+// SetCardLimit updates the card limit for the application.
 func (a *App) SetCardLimit(cardLimit int) {
 	a.cardLimitMux.Lock()
 	defer a.cardLimitMux.Unlock()

@@ -242,81 +242,53 @@ func TestPatchBoard(t *testing.T) {
 		require.Equal(t, boardID, patchedBoard.ID)
 	})
 
-	t.Run("patch type open, single user", func(t *testing.T) {
-		const boardID = "board_id_1"
-		const userID = "user_id_2"
-		const teamID = "team_id_1"
+	testCases := []struct {
+		name      string
+		boardType model.BoardType
+	}{
+		{"patch type open, single user", model.BoardTypeOpen},
+		{"patch type private, single user", model.BoardTypePrivate},
+	}
 
-		patchType := model.BoardTypeOpen
-		patch := &model.BoardPatch{
-			Type: &patchType,
-		}
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			const boardID = "board_id_1"
+			const userID = "user_id_2"
+			const teamID = "team_id_1"
 
-		// Type not nil, will cause board to be reteived
-		// to check isTemplate
-		th.Store.EXPECT().GetBoard(boardID).Return(&model.Board{
-			ID:         boardID,
-			TeamID:     teamID,
-			IsTemplate: true,
-		}, nil).Times(2)
-		// Type not null will retrieve team members
-		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
+			patchType := tc.boardType
+			patch := &model.BoardPatch{
+				Type: &patchType,
+			}
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
-			&model.Board{
-				ID:     boardID,
-				TeamID: teamID,
-			},
-			nil)
+			// Type not nil, will cause board to be reteived
+			// to check isTemplate
+			th.Store.EXPECT().GetBoard(boardID).Return(&model.Board{
+				ID:         boardID,
+				TeamID:     teamID,
+				IsTemplate: true,
+			}, nil).Times(2)
+			// Type not null will retrieve team members
+			th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
 
-		// Should call GetMembersForBoard 3 times
-		// for WS BroadcastBoardChange
-		// for AddTeamMembers check
-		// for WS BroadcastMemberChange
-		th.Store.EXPECT().GetMembersForBoard(boardID).Return([]*model.BoardMember{}, nil).Times(3)
+			th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+				&model.Board{
+					ID:     boardID,
+					TeamID: teamID,
+				},
+				nil)
 
-		patchedBoard, err := th.App.PatchBoard(patch, boardID, userID)
-		require.NoError(t, err)
-		require.Equal(t, boardID, patchedBoard.ID)
-	})
+			// Should call GetMembersForBoard 3 times
+			// for WS BroadcastBoardChange
+			// for AddTeamMembers check
+			// for WS BroadcastMemberChange
+			th.Store.EXPECT().GetMembersForBoard(boardID).Return([]*model.BoardMember{}, nil).Times(3)
 
-	t.Run("patch type private, single user", func(t *testing.T) {
-		const boardID = "board_id_1"
-		const userID = "user_id_2"
-		const teamID = "team_id_1"
-
-		patchType := model.BoardTypePrivate
-		patch := &model.BoardPatch{
-			Type: &patchType,
-		}
-
-		// Type not nil, will cause board to be reteived
-		// to check isTemplate
-		th.Store.EXPECT().GetBoard(boardID).Return(&model.Board{
-			ID:         boardID,
-			TeamID:     teamID,
-			IsTemplate: true,
-		}, nil).Times(2)
-		// Type not null will retrieve team members
-		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
-
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
-			&model.Board{
-				ID:     boardID,
-				TeamID: teamID,
-			},
-			nil)
-
-		// Should call GetMembersForBoard 3 times
-		// for WS BroadcastBoardChange
-		// for AddTeamMembers check
-		// for WS BroadcastMemberChange
-		th.Store.EXPECT().GetMembersForBoard(boardID).Return([]*model.BoardMember{}, nil).Times(3)
-
-		patchedBoard, err := th.App.PatchBoard(patch, boardID, userID)
-		require.NoError(t, err)
-		require.Equal(t, boardID, patchedBoard.ID)
-	})
+			patchedBoard, err := th.App.PatchBoard(patch, boardID, userID)
+			require.NoError(t, err)
+			require.Equal(t, boardID, patchedBoard.ID)
+		})
+	}
 
 	t.Run("patch type open, user with member", func(t *testing.T) {
 		const boardID = "board_id_1"

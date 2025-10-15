@@ -26,6 +26,8 @@ import (
 
 var tablePrefix = "focalboard_"
 
+var errNotImplemented = fmt.Errorf("not implemented")
+
 type BoardsMigrator struct {
 	withMattermostMigrations bool
 	connString               string
@@ -77,7 +79,7 @@ func (bm *BoardsMigrator) runMattermostMigrations() error {
 	if err != nil {
 		return err
 	}
-	defer engine.Close()
+	defer func() { _ = engine.Close() }()
 
 	return engine.ApplyAll()
 }
@@ -211,7 +213,7 @@ func (bm *BoardsMigrator) Setup() error {
 		Logger:           logger,
 		DB:               bm.db,
 		NewMutexFn: func(name string) (*cluster.Mutex, error) {
-			return nil, fmt.Errorf("not implemented")
+			return nil, errNotImplemented
 		},
 		SkipMigrations: true,
 	}

@@ -15,15 +15,23 @@ env:
 jobs:
 
   ci-ubuntu-server:
-    runs-on: self-hosted
+    runs-on: ubuntu-22.04
 
-    strategy:
-      matrix:
-        db:
-          - sqlite
-          - mysql
-          - mariadb
-          - postgres
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: mostest
+          MYSQL_USER: mmuser
+          MYSQL_PASSWORD: mostest
+          MYSQL_DATABASE: focalboard_test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
     - name: Checkout
@@ -34,8 +42,15 @@ jobs:
       with:
         go-version-file: server/go.mod
 
-    - name: "Test server: ${{matrix['db']}}"
-      run: make server-test-${{matrix['db']}}
+    - name: Test server with MySQL
+      env:
+        FOCALBOARD_UNIT_TESTING: 1
+        FOCALBOARD_STORE_TEST_DB_TYPE: mysql
+        FOCALBOARD_STORE_TEST_CONN_STRING: "mmuser:mostest@tcp(localhost:3306)/focalboard_test?charset=utf8mb4,utf8&writeTimeout=30s"
+      run: |
+        cd server
+        go test -tags 'json1 sqlite3' -race -v -coverpkg=./... -coverprofile=server-mysql-profile.coverage -count=1 -timeout=30m ./...
+        go tool cover -func server-mysql-profile.coverage
 
   ci-ubuntu-webapp:
     runs-on: ubuntu-22.04

@@ -253,7 +253,7 @@ func (s *SQLStore) getFocalBoardTableNames() ([]string, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error fetching FocalBoard table names: %w", err)
 	}
-	defer rows.Close()
+	defer func() { _ = rows.Close() }()
 
 	names := make([]string, 0)
 
@@ -352,9 +352,10 @@ func (s *SQLStore) RunDeDuplicateCategoryBoardsMigration(currentMigration int) e
 		}
 	}
 
-	if s.dbType == model.MysqlDBType {
+	switch s.dbType {
+	case model.MysqlDBType:
 		return s.runMySQLDeDuplicateCategoryBoardsMigration()
-	} else if s.dbType == model.PostgresDBType {
+	case model.PostgresDBType:
 		return s.runPostgresDeDuplicateCategoryBoardsMigration()
 	}
 

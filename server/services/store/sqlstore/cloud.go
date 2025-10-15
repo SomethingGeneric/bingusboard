@@ -32,7 +32,7 @@ func (s *SQLStore) activeCardsQuery(builder sq.StatementBuilderType, selectStr s
 	if cardLimit != 0 {
 		query = query.
 			Limit(1).
-			Offset(uint64(cardLimit - 1))
+			Offset(uint64(cardLimit - 1)) //nolint:gosec // card limit is a controlled value
 	}
 
 	return query
@@ -63,7 +63,7 @@ func (s *SQLStore) getCardLimitTimestamp(db sq.BaseRunner) (int64, error) {
 
 	var result string
 	err := scanner.Scan(&result)
-	if errors.Is(sql.ErrNoRows, err) {
+	if errors.Is(err, sql.ErrNoRows) {
 		return 0, nil
 	}
 	if err != nil {

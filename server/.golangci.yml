@@ -1,32 +1,30 @@
+version: "2"
+
 run:
   timeout: 5m
   modules-download-mode: readonly
-  skip-dirs:
+
+issues:
+  exclude-dirs:
     - services/store/sqlstore/migrations
 
 linters-settings:
   gofmt:
     simplify: true
   govet:
-    check-shadowing: true
     enable-all: true
     disable:
       - fieldalignment
+      - shadow
   lll:
-    line-length: 180
+    line-length: 200
+    tab-width: 1
   dupl:
     threshold: 200
-  revive:
-    enableAllRules: true
-    rules:
-      - name: exported
-        disabled: true
 
 linters:
   disable-all: true
   enable:
-    - gofmt
-    - goimports
     - ineffassign
     - unparam
     - errcheck
@@ -35,7 +33,6 @@ linters:
     - durationcheck
     - errorlint
     - exhaustive
-    - exportloopref
     - gosec
     - makezero
     - staticcheck
@@ -48,17 +45,17 @@ linters:
     - godot
     - err113
     - goheader
-    - revive
     - nakedret
     - gomodguard
     - goprintffuncname
-    - gosimple
-    - lll
     - misspell
     - nolintlint
-    - stylecheck
-    - typecheck
     - unconvert
     - unused
     - whitespace
     - gocyclo
+
+formatters:
+  enable:
+    - gofmt
+    - goimports

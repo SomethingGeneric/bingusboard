@@ -7,6 +7,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/collectors"
 )
 
+// Metrics constants define the namespace and subsystems for Prometheus metrics.
 const (
 	MetricsNamespace       = "focalboard"
 	MetricsSubsystemBlocks = "blocks"
@@ -17,6 +18,7 @@ const (
 	MetricsCloudInstallationLabel = "installationId"
 )
 
+// InstanceInfo contains version and installation information for metrics.
 type InstanceInfo struct {
 	Version        string
 	BuildNum       string
@@ -175,24 +177,28 @@ func NewMetrics(info InstanceInfo) *Metrics {
 	return m
 }
 
+// IncrementLoginCount increments the login counter.
 func (m *Metrics) IncrementLoginCount(num int) {
 	if m != nil {
 		m.loginCount.Add(float64(num))
 	}
 }
 
+// IncrementLogoutCount increments the logout counter.
 func (m *Metrics) IncrementLogoutCount(num int) {
 	if m != nil {
 		m.logoutCount.Add(float64(num))
 	}
 }
 
+// IncrementLoginFailCount increments the login failure counter.
 func (m *Metrics) IncrementLoginFailCount(num int) {
 	if m != nil {
 		m.loginFailCount.Add(float64(num))
 	}
 }
 
+// IncrementBlocksInserted increments the blocks inserted counter.
 func (m *Metrics) IncrementBlocksInserted(num int) {
 	if m != nil {
 		m.blocksInsertedCount.Add(float64(num))
@@ -200,6 +206,7 @@ func (m *Metrics) IncrementBlocksInserted(num int) {
 	}
 }
 
+// IncrementBlocksPatched increments the blocks patched counter.
 func (m *Metrics) IncrementBlocksPatched(num int) {
 	if m != nil {
 		m.blocksPatchedCount.Add(float64(num))
@@ -207,6 +214,7 @@ func (m *Metrics) IncrementBlocksPatched(num int) {
 	}
 }
 
+// IncrementBlocksDeleted increments the blocks deleted counter.
 func (m *Metrics) IncrementBlocksDeleted(num int) {
 	if m != nil {
 		m.blocksDeletedCount.Add(float64(num))
@@ -214,18 +222,21 @@ func (m *Metrics) IncrementBlocksDeleted(num int) {
 	}
 }
 
+// ObserveBlockCount sets the current block count for a specific block type.
 func (m *Metrics) ObserveBlockCount(blockType string, count int64) {
 	if m != nil {
 		m.blockCount.WithLabelValues(blockType).Set(float64(count))
 	}
 }
 
+// ObserveBoardCount sets the current board count.
 func (m *Metrics) ObserveBoardCount(count int64) {
 	if m != nil {
 		m.boardCount.Set(float64(count))
 	}
 }
 
+// ObserveTeamCount sets the current team count.
 func (m *Metrics) ObserveTeamCount(count int64) {
 	if m != nil {
 		m.teamCount.Set(float64(count))

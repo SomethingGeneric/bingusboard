@@ -7,6 +7,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+// Password validation constants define the maximum length and character sets.
 const (
 	PasswordMaximumLength    = 64
 	PasswordSpecialChars     = "!\"\\#$%&'()*+,-./:;<=>?@[]^_`|~" //nolint:gosec
@@ -23,6 +24,7 @@ const (
 	InvalidSymbolPassword    = "symbol"
 )
 
+// PasswordHashStrength defines the bcrypt cost for password hashing.
 var PasswordHashStrength = 10
 
 // HashPassword generates a hash using the bcrypt.GenerateFromPassword.
@@ -45,6 +47,7 @@ func ComparePassword(hash, password string) bool {
 	return err == nil
 }
 
+// InvalidPasswordError represents a password validation error with failing criteria.
 type InvalidPasswordError struct {
 	FailingCriterias []string
 }
@@ -53,6 +56,7 @@ func (ipe *InvalidPasswordError) Error() string {
 	return fmt.Sprintf("invalid password, failing criteria: %s", strings.Join(ipe.FailingCriterias, ", "))
 }
 
+// PasswordSettings defines the requirements for password validation.
 type PasswordSettings struct {
 	MinimumLength int
 	Lowercase     bool
@@ -61,6 +65,7 @@ type PasswordSettings struct {
 	Symbol        bool
 }
 
+// IsPasswordValid validates a password against the provided settings.
 func IsPasswordValid(password string, settings PasswordSettings) error {
 	err := &InvalidPasswordError{
 		FailingCriterias: []string{},

@@ -1,3 +1,5 @@
+// Package main generates template archives from template directories.
+
 package main
 
 import (
@@ -47,7 +49,7 @@ func main() {
 		code = -1
 		fmt.Fprintf(os.Stderr, "error creating archive: %v\n", err)
 	} else if cfg.verbose {
-		fmt.Fprintf(os.Stdout, "archive created: %s\n", cfg.out)
+		_, _ = fmt.Fprintf(os.Stdout, "archive created: %s\n", cfg.out)
 	}
 
 	os.Exit(code)
@@ -95,7 +97,7 @@ func build(cfg appConfig) (err error) {
 	for _, f := range files {
 		if !f.IsDir() {
 			if f.Name() != versionFilename && cfg.verbose {
-				fmt.Fprintf(os.Stdout, "skipping non-directory %s\n", f.Name())
+				_, _ = fmt.Fprintf(os.Stdout, "skipping non-directory %s\n", f.Name())
 			}
 			continue
 		}
@@ -108,7 +110,7 @@ func build(cfg appConfig) (err error) {
 
 func getVersionFile(cfg appConfig) ([]byte, error) {
 	path := filepath.Join(cfg.dir, versionFilename)
-	buf, err := os.ReadFile(path)
+	buf, err := os.ReadFile(path) //nolint:gosec // path is from controlled config directory
 	if err != nil {
 		return nil, fmt.Errorf("cannot read %s: %w", path, err)
 	}
@@ -141,7 +143,7 @@ func writeBoard(w *zip.Writer, boardID string, cfg appConfig) error {
 	for _, f := range files {
 		if f.IsDir() {
 			if cfg.verbose {
-				fmt.Fprintf(os.Stdout, "skipping directory %s\n", f.Name())
+				_, _ = fmt.Fprintf(os.Stdout, "skipping directory %s\n", f.Name())
 			}
 			continue
 		}
@@ -159,11 +161,11 @@ func writeBoard(w *zip.Writer, boardID string, cfg appConfig) error {
 }
 
 func writeFile(w *zip.Writer, srcPath string, destPath string, cfg appConfig) (err error) {
-	inFile, err := os.Open(srcPath)
+	inFile, err := os.Open(srcPath) //nolint:gosec // path is from controlled template directory
 	if err != nil {
 		return fmt.Errorf("error reading %s: %w", srcPath, err)
 	}
-	defer inFile.Close()
+	defer func() { _ = inFile.Close() }()
 
 	outFile, err := w.Create(destPath)
 	if err != nil {
@@ -175,7 +177,7 @@ func writeFile(w *zip.Writer, srcPath string, destPath string, cfg appConfig) (e
 	}
 
 	if cfg.verbose {
-		fmt.Fprintf(os.Stdout, "%s written (%d bytes)\n", destPath, size)
+		_, _ = fmt.Fprintf(os.Stdout, "%s written (%d bytes)\n", destPath, size)
 	}
 
 	return nil

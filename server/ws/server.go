@@ -120,7 +120,7 @@ func (ws *Server) handleWebSocket(w http.ResponseWriter, r *http.Request) {
 
 		// Remove session from listeners
 		ws.removeListener(wsSession)
-		wsSession.conn.Close()
+		_ = wsSession.conn.Close()
 	}()
 
 	// Simple message handling loop
@@ -450,7 +450,7 @@ func (ws *Server) authenticateListener(wsSession *websocketSession, token string
 	// Authenticate session
 	userID := ws.getUserIDForToken(token)
 	if userID == "" {
-		wsSession.conn.Close()
+		_ = wsSession.conn.Close()
 		return
 	}
 
@@ -560,11 +560,12 @@ func (ws *Server) BroadcastBlockChange(teamID string, block *model.Block) {
 		err := listener.WriteJSON(message)
 		if err != nil {
 			ws.logger.Error("broadcast error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
 
+// BroadcastCategoryChange broadcasts a category change to connected clients.
 func (ws *Server) BroadcastCategoryChange(category model.Category) {
 	message := UpdateCategoryMessage{
 		Action:   websocketActionUpdateCategory,
@@ -583,11 +584,12 @@ func (ws *Server) BroadcastCategoryChange(category model.Category) {
 
 		if err := listener.WriteJSON(message); err != nil {
 			ws.logger.Error("broadcast category change error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
 
+// BroadcastCategoryReorder broadcasts a category reorder event to connected clients.
 func (ws *Server) BroadcastCategoryReorder(teamID, userID string, categoryOrder []string) {
 	message := CategoryReorderMessage{
 		Action:        websocketActionReorderCategories,
@@ -605,11 +607,12 @@ func (ws *Server) BroadcastCategoryReorder(teamID, userID string, categoryOrder 
 
 		if err := listener.WriteJSON(message); err != nil {
 			ws.logger.Error("broadcast category order change error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
 
+// BroadcastCategoryBoardsReorder broadcasts a category boards reorder event to connected clients.
 func (ws *Server) BroadcastCategoryBoardsReorder(teamID, userID, categoryID string, boardOrder []string) {
 	message := CategoryBoardReorderMessage{
 		Action:     websocketActionReorderCategoryBoards,
@@ -629,11 +632,12 @@ func (ws *Server) BroadcastCategoryBoardsReorder(teamID, userID, categoryID stri
 
 		if err := listener.WriteJSON(message); err != nil {
 			ws.logger.Error("broadcast category boards order change error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
 
+// BroadcastCategoryBoardChange broadcasts a category board change to connected clients.
 func (ws *Server) BroadcastCategoryBoardChange(teamID, userID string, boardCategories []*model.BoardCategoryWebsocketData) {
 	message := UpdateCategoryMessage{
 		Action:          websocketActionUpdateCategoryBoard,
@@ -652,7 +656,7 @@ func (ws *Server) BroadcastCategoryBoardChange(teamID, userID string, boardCateg
 
 		if err := listener.WriteJSON(message); err != nil {
 			ws.logger.Error("broadcast category change error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
@@ -676,11 +680,12 @@ func (ws *Server) BroadcastConfigChange(clientConfig model.ClientConfig) {
 		err := listener.WriteJSON(message)
 		if err != nil {
 			ws.logger.Error("broadcast error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
 
+// BroadcastBoardChange broadcasts a board change to connected clients.
 func (ws *Server) BroadcastBoardChange(teamID string, board *model.Board) {
 	message := UpdateBoardMsg{
 		Action: websocketActionUpdateBoard,
@@ -705,11 +710,12 @@ func (ws *Server) BroadcastBoardChange(teamID string, board *model.Board) {
 		err := listener.WriteJSON(message)
 		if err != nil {
 			ws.logger.Error("broadcast error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
 
+// BroadcastBoardDelete broadcasts a board deletion to connected clients.
 func (ws *Server) BroadcastBoardDelete(teamID, boardID string) {
 	now := utils.GetMillis()
 	board := &model.Board{}
@@ -745,7 +751,7 @@ func (ws *Server) BroadcastMemberChange(teamID, boardID string, member *model.Bo
 		err := listener.WriteJSON(message)
 		if err != nil {
 			ws.logger.Error("broadcast error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }
@@ -777,7 +783,7 @@ func (ws *Server) BroadcastMemberDelete(teamID, boardID, userID string) {
 		err := listener.WriteJSON(message)
 		if err != nil {
 			ws.logger.Error("broadcast error", mlog.Err(err))
-			listener.conn.Close()
+			_ = listener.conn.Close()
 		}
 	}
 }

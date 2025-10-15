@@ -19,7 +19,7 @@ func (s *SQLStore) getBoardsForCompliance(db sq.BaseRunner, opts model.QueryBoar
 	}
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec
 	}
 
 	if opts.PerPage > 0 {
@@ -97,7 +97,7 @@ func (s *SQLStore) getBoardsComplianceHistory(db sq.BaseRunner, opts model.Query
 	}
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec
 	}
 
 	if opts.PerPage > 0 {
@@ -160,7 +160,7 @@ func (s *SQLStore) getBlocksComplianceHistory(db sq.BaseRunner, opts model.Query
 	}
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec
 	}
 
 	if opts.PerPage > 0 {

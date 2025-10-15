@@ -147,7 +147,7 @@ func (s *SQLStore) genericRetentionPoliciesDeletion(
 				Select(primaryKeysStr).
 				From(s.tablePrefix + info.Table).
 				Where(whereClause).
-				Limit(uint64(batchSize))
+				Limit(uint64(batchSize)) //nolint:gosec // batch size is a controlled constant
 
 			selectString, _, _ := selectQuery.ToSql()
 

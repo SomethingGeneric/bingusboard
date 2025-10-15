@@ -71,7 +71,7 @@ func (s *SQLStore) getBlocks(db sq.BaseRunner, opts model.QueryBlocksOptions) ([
 	}
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec // pagination parameters are safe
 	}
 
 	if opts.PerPage > 0 {
@@ -598,7 +598,7 @@ func (s *SQLStore) getBlock(db sq.BaseRunner, blockID string) (*model.Block, err
 	return blocks[0], nil
 }
 
-func (s *SQLStore) getBlockHistory(db sq.BaseRunner, blockID string, opts model.QueryBlockHistoryOptions) ([]*model.Block, error) {
+func (s *SQLStore) getBlockHistoryQuery(db sq.BaseRunner, whereClause sq.Eq, opts model.QueryBlockHistoryOptions, logPrefix string) ([]*model.Block, error) {
 	var order string
 	if opts.Descending {
 		order = descClause
@@ -607,7 +607,7 @@ func (s *SQLStore) getBlockHistory(db sq.BaseRunner, blockID string, opts model.
 	query := s.getQueryBuilder(db).
 		Select(s.blockFields("")...).
 		From(s.tablePrefix + "blocks_history").
-		Where(sq.Eq{"id": blockID}).
+		Where(whereClause).
 		OrderBy("insert_at " + order + ", update_at" + order)
 
 	if opts.BeforeUpdateAt != 0 {
@@ -624,7 +624,7 @@ func (s *SQLStore) getBlockHistory(db sq.BaseRunner, blockID string, opts model.
 
 	rows, err := query.Query()
 	if err != nil {
-		s.logger.Error(`GetBlockHistory ERROR`, mlog.Err(err))
+		s.logger.Error(logPrefix+` ERROR`, mlog.Err(err))
 		return nil, err
 	}
 	defer s.CloseRows(rows)
@@ -632,38 +632,12 @@ func (s *SQLStore) getBlockHistory(db sq.BaseRunner, blockID string, opts model.
 	return s.blocksFromRows(rows)
 }
 
+func (s *SQLStore) getBlockHistory(db sq.BaseRunner, blockID string, opts model.QueryBlockHistoryOptions) ([]*model.Block, error) {
+	return s.getBlockHistoryQuery(db, sq.Eq{"id": blockID}, opts, "GetBlockHistory")
+}
+
 func (s *SQLStore) getBlockHistoryDescendants(db sq.BaseRunner, boardID string, opts model.QueryBlockHistoryOptions) ([]*model.Block, error) {
-	var order string
-	if opts.Descending {
-		order = descClause
-	}
-
-	query := s.getQueryBuilder(db).
-		Select(s.blockFields("")...).
-		From(s.tablePrefix + "blocks_history").
-		Where(sq.Eq{"board_id": boardID}).
-		OrderBy("insert_at " + order + ", update_at" + order)
-
-	if opts.BeforeUpdateAt != 0 {
-		query = query.Where(sq.Lt{"update_at": opts.BeforeUpdateAt})
-	}
-
-	if opts.AfterUpdateAt != 0 {
-		query = query.Where(sq.Gt{"update_at": opts.AfterUpdateAt})
-	}
-
-	if opts.Limit != 0 {
-		query = query.Limit(opts.Limit)
-	}
-
-	rows, err := query.Query()
-	if err != nil {
-		s.logger.Error(`GetBlockHistoryDescendants ERROR`, mlog.Err(err))
-		return nil, err
-	}
-	defer s.CloseRows(rows)
-
-	return s.blocksFromRows(rows)
+	return s.getBlockHistoryQuery(db, sq.Eq{"board_id": boardID}, opts, "GetBlockHistoryDescendants")
 }
 
 // getBlockHistoryNewestChildren returns the newest (latest) version child blocks for the
@@ -699,12 +673,12 @@ func (s *SQLStore) getBlockHistoryNewestChildren(db sq.BaseRunner, parentID stri
 		InnerJoin("("+subQuery+") AS sub ON bh.id=sub.id AND bh.insert_at=sub.max_insert_at", subArgs...)
 
 	if opts.Page != 0 {
-		query = query.Offset(uint64(opts.Page * opts.PerPage))
+		query = query.Offset(uint64(opts.Page * opts.PerPage)) //nolint:gosec // pagination parameters are safe
 	}
 
 	if opts.PerPage > 0 {
 		// limit+1 to detect if more records available
-		query = query.Limit(uint64(opts.PerPage + 1))
+		query = query.Limit(uint64(opts.PerPage + 1)) //nolint:gosec // pagination parameters are safe
 	}
 
 	sql, args, err := query.ToSql()

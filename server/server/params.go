@@ -13,6 +13,7 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
+// Params contains the parameters required to create a new Server.
 type Params struct {
 	Cfg                *config.Configuration
 	SingleUserToken    string
@@ -25,6 +26,7 @@ type Params struct {
 	ServicesAPI        model.ServicesAPI
 }
 
+// CheckValid validates that all required parameters are set.
 func (p Params) CheckValid() error {
 	if p.Cfg == nil {
 		return ErrServerParam{name: "Cfg", issue: "cannot be nil"}
@@ -44,6 +46,7 @@ func (p Params) CheckValid() error {
 	return nil
 }
 
+// ErrServerParam represents an error with a server parameter.
 type ErrServerParam struct {
 	name  string
 	issue string

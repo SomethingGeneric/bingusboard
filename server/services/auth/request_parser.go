@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// Authentication header and cookie constants.
 const (
 	HeaderToken        = "token"
 	HeaderAuth         = "Authorization"
@@ -15,8 +16,10 @@ const (
 	SessionCookieToken = "FOCALBOARDAUTHTOKEN"
 )
 
+// TokenLocation indicates where an authentication token was found in a request.
 type TokenLocation int
 
+// Token location constants.
 const (
 	TokenLocationNotFound TokenLocation = iota
 	TokenLocationHeader
@@ -39,6 +42,7 @@ func (tl TokenLocation) String() string {
 	}
 }
 
+// ParseAuthTokenFromRequest extracts an authentication token from an HTTP request.
 func ParseAuthTokenFromRequest(r *http.Request) (string, TokenLocation) {
 	authHeader := r.Header.Get(HeaderAuth)
 

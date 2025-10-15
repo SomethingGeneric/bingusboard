@@ -10,6 +10,7 @@ import (
 	mmModel "github.com/mattermost/mattermost/server/public/model"
 )
 
+// CardLimitTimestampSystemKey is the system key for card limit timestamp.
 const CardLimitTimestampSystemKey = "card_limit_timestamp"
 
 // Store represents the abstraction of the data storage.
@@ -180,10 +181,12 @@ type Store interface {
 	DeleteBlockRecord(blockID, modifiedBy string) error
 }
 
+// NotSupportedError represents an unsupported operation error.
 type NotSupportedError struct {
 	msg string
 }
 
+// NewNotSupportedError creates a new not supported error.
 func NewNotSupportedError(msg string) NotSupportedError {
 	return NotSupportedError{msg: msg}
 }

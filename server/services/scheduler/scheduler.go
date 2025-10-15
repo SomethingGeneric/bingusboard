@@ -1,3 +1,5 @@
+// Package scheduler provides task scheduling functionality.
+
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
@@ -8,8 +10,10 @@ import (
 	"time"
 )
 
+// TaskFunc is a function that can be scheduled for execution.
 type TaskFunc func()
 
+// ScheduledTask represents a task that can be scheduled for execution.
 type ScheduledTask struct {
 	Name      string        `json:"name"`
 	Interval  time.Duration `json:"interval"`
@@ -19,10 +23,12 @@ type ScheduledTask struct {
 	cancelled chan struct{}
 }
 
+// CreateTask creates a one-time scheduled task that executes after the specified duration.
 func CreateTask(name string, function TaskFunc, timeToExecution time.Duration) *ScheduledTask {
 	return createTask(name, function, timeToExecution, false)
 }
 
+// CreateRecurringTask creates a recurring scheduled task that executes at regular intervals.
 func CreateRecurringTask(name string, function TaskFunc, interval time.Duration) *ScheduledTask {
 	return createTask(name, function, interval, true)
 }
@@ -60,6 +66,7 @@ func createTask(name string, function TaskFunc, interval time.Duration, recurrin
 	return task
 }
 
+// Cancel stops a scheduled task and waits for it to complete.
 func (task *ScheduledTask) Cancel() {
 	close(task.cancel)
 	<-task.cancelled

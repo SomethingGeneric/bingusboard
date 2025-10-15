@@ -4,6 +4,7 @@ import (
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 )
 
+// Audit constants define configuration and field keys for audit logging.
 const (
 	DefMaxQueueSize = 1000
 
@@ -22,6 +23,7 @@ const (
 	Fail    = "fail"
 )
 
+// Audit log levels for different types of operations.
 var (
 	LevelAuth   = mlog.Level{ID: 1000, Name: "auth"}
 	LevelModify = mlog.Level{ID: 1001, Name: "mod"}

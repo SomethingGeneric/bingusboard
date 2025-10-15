@@ -122,7 +122,7 @@ func (c *Client) doAPIRequestReader(method, url string, data io.Reader, _ /* eta
 		opt(rq)
 	}
 
-	if c.HTTPHeader != nil && len(c.HTTPHeader) > 0 {
+	if len(c.HTTPHeader) > 0 {
 		for k, v := range c.HTTPHeader {
 			rq.Header.Set(k, v)
 		}
@@ -813,7 +813,7 @@ func (c *Client) TeamUploadFile(teamID, boardID string, data io.Reader) (*api.Fi
 	if _, err = io.Copy(part, data); err != nil {
 		return nil, &Response{Error: err}
 	}
-	writer.Close()
+	_ = writer.Close()
 
 	opt := func(r *http.Request) {
 		r.Header.Add("Content-Type", writer.FormDataContentType())
@@ -928,7 +928,7 @@ func (c *Client) ImportArchive(teamID string, data io.Reader) *Response {
 	if _, err = io.Copy(part, data); err != nil {
 		return &Response{Error: err}
 	}
-	writer.Close()
+	_ = writer.Close()
 
 	opt := func(r *http.Request) {
 		r.Header.Add("Content-Type", writer.FormDataContentType())

@@ -127,7 +127,7 @@ func (s *PluginTestStore) GetUserByID(userID string) (*model.User, error) {
 	return user, nil
 }
 
-func (s *PluginTestStore) GetUsersList(userIDs []string, showEmail, showName bool) ([]*model.User, error) {
+func (s *PluginTestStore) GetUsersList(userIDs []string, _, _ bool) ([]*model.User, error) {
 	var users []*model.User
 	for _, id := range userIDs {
 		user := s.users[id]
@@ -169,7 +169,7 @@ func (s *PluginTestStore) GetUserPreferences(userID string) (mmModel.Preferences
 	return nil, errTestStore
 }
 
-func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, showEmail, showName bool) ([]*model.User, error) {
+func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, _, _ bool) ([]*model.User, error) {
 	if asGuestID == "guest" {
 		return []*model.User{
 			s.users["viewer"],
@@ -180,8 +180,8 @@ func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, showEm
 		}, nil
 	}
 
-	switch {
-	case teamID == s.testTeam.ID:
+	switch teamID {
+	case s.testTeam.ID:
 		return []*model.User{
 			s.users["team-member"],
 			s.users["viewer"],
@@ -190,7 +190,7 @@ func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, showEm
 			s.users["admin"],
 			s.users["guest"],
 		}, nil
-	case teamID == s.otherTeam.ID:
+	case s.otherTeam.ID:
 		return []*model.User{
 			s.users["team-member"],
 			s.users["viewer"],
@@ -198,7 +198,7 @@ func (s *PluginTestStore) GetUsersByTeam(teamID string, asGuestID string, showEm
 			s.users["editor"],
 			s.users["admin"],
 		}, nil
-	case teamID == s.emptyTeam.ID:
+	case s.emptyTeam.ID:
 		return []*model.User{}, nil
 	}
 	return nil, errTestStore
@@ -248,7 +248,7 @@ func (s *PluginTestStore) CanSeeUser(seerID string, seenID string) (bool, error)
 	return false, nil
 }
 
-func (s *PluginTestStore) SearchUserChannels(teamID, userID, query string) ([]*mmModel.Channel, error) {
+func (s *PluginTestStore) SearchUserChannels(teamID, _ string, query string) ([]*mmModel.Channel, error) {
 	return []*mmModel.Channel{
 		{
 			TeamId:      teamID,
@@ -266,14 +266,15 @@ func (s *PluginTestStore) SearchUserChannels(teamID, userID, query string) ([]*m
 }
 
 func (s *PluginTestStore) GetChannel(teamID, channel string) (*mmModel.Channel, error) {
-	if channel == "valid-channel-id" {
+	switch channel {
+	case "valid-channel-id":
 		return &mmModel.Channel{
 			TeamId:      teamID,
 			Id:          "valid-channel-id",
 			DisplayName: "Valid Channel",
 			Name:        "valid-channel",
 		}, nil
-	} else if channel == "valid-channel-id-2" {
+	case "valid-channel-id-2":
 		return &mmModel.Channel{
 			TeamId:      teamID,
 			Id:          "valid-channel-id-2",

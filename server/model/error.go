@@ -13,6 +13,7 @@ import (
 )
 
 var (
+	// ErrViewsLimitReached indicates the views limit has been reached.
 	ErrViewsLimitReached        = errors.New("views limit reached for board")
 	ErrPatchUpdatesLimitedCards = errors.New("patch updates cards that are limited")
 
@@ -53,6 +54,7 @@ type ErrNotAllFound struct {
 	resources []string
 }
 
+// NewErrNotAllFound creates an error for when not all requested items are found.
 func NewErrNotAllFound(entity string, resources []string) *ErrNotAllFound {
 	return &ErrNotAllFound{
 		entity:    entity,
@@ -132,10 +134,12 @@ func (br *ErrForbidden) Error() string {
 	return br.reason
 }
 
+// ErrInvalidCategory represents an invalid category error.
 type ErrInvalidCategory struct {
 	msg string
 }
 
+// NewErrInvalidCategory creates a new invalid category error.
 func NewErrInvalidCategory(msg string) *ErrInvalidCategory {
 	return &ErrInvalidCategory{
 		msg: msg,
@@ -146,10 +150,12 @@ func (e *ErrInvalidCategory) Error() string {
 	return e.msg
 }
 
+// ErrNotImplemented represents a not implemented error.
 type ErrNotImplemented struct {
 	msg string
 }
 
+// NewErrNotImplemented creates a new not implemented error.
 func NewErrNotImplemented(msg string) *ErrNotImplemented {
 	return &ErrNotImplemented{
 		msg: msg,

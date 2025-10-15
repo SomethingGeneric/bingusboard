@@ -33,7 +33,7 @@ func (rec *Record) Success() {
 	rec.Status = Success
 }
 
-// Success marks the audit record status as failed.
+// Fail marks the audit record status as failed.
 func (rec *Record) Fail() {
 	rec.Status = Fail
 }

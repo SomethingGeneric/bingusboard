@@ -1,3 +1,4 @@
+// Package web provides the web server infrastructure for Focalboard.
 package web
 
 import (
@@ -75,8 +76,9 @@ func NewServer(rootPath string, serverRoot string, port int, ssl, localOnly bool
 	return ws
 }
 
+// Router returns the underlying HTTP router.
 func (ws *Server) Router() *mux.Router {
-	return ws.Server.Handler.(*mux.Router)
+	return ws.Handler.(*mux.Router)
 }
 
 // AddRoutes allows services to register themself in the webserver router and provide new endpoints.
@@ -86,7 +88,7 @@ func (ws *Server) AddRoutes(rs RoutedService) {
 
 func (ws *Server) registerRoutes() {
 	ws.Router().PathPrefix("/static").Handler(http.StripPrefix(ws.basePrefix+"/static/", http.FileServer(http.Dir(filepath.Join(ws.rootPath, "static")))))
-	ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	ws.Router().PathPrefix("/").HandlerFunc(func(w http.ResponseWriter, _ *http.Request) {
 		w.Header().Set("Content-Type", "text/html; charset=utf-8")
 		indexTemplate, err := template.New("index").ParseFiles(path.Join(ws.rootPath, "index.html"))
 		if err != nil {
@@ -132,6 +134,7 @@ func (ws *Server) Start() {
 	}()
 }
 
+// Shutdown gracefully stops the web server.
 func (ws *Server) Shutdown() error {
 	return ws.Close()
 }
