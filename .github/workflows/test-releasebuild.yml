@@ -1,0 +1,50 @@
+name: Production-Release
+
+on: push
+
+env:
+ EXCLUDE_ENTERPRISE: true
+ BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+
+  ubuntu:
+    runs-on: self-hosted
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@ff7abcd0c3c05ccf6adc123a8cd1fd4fb30fb493
+      with:
+        path: "focalboard"
+
+    - name: Replace token 1 server
+      run: sed -i -e "s,placeholder_rudder_dataplane_url,${{ secrets.RUDDER_DATAPLANE_URL }},g" ${{ github.workspace }}/focalboard/server/services/telemetry/telemetry.go
+
+    - name: Replace token 2 server
+      run: sed -i -e "s,placeholder_rudder_key,${{ secrets.RUDDER_PROD_KEY }},g" ${{ github.workspace }}/focalboard/server/services/telemetry/telemetry.go
+
+    - name: npm ci
+      run: cd focalboard/webapp; npm ci --no-optional
+
+    - name: Set up Go
+      uses: actions/setup-go@c0137caad775660c0844396c52da96e560aba63d
+      with:
+        go-version-file: focalboard/server/go.mod
+
+    - name: Setup Node
+      uses: actions/setup-node@89d709d423dc495668cd762a18dd4a070611be3f
+      with:
+        node-version-file: focalboard/webapp/.nvmrc
+
+    - name: Build Linux server
+      run: cd focalboard; make server-linux-package
+      env:
+        BUILD_NUMBER: ${{ github.run_id }}
+
+    - name: Upload server package
+      uses: actions/upload-artifact@2848b2cda0e5190984587ec6bb1f36730ca78d50
+      with:
+        name: focalboard-server-linux-amd64.tar.gz
+        path: ${{ github.workspace }}/focalboard/dist/focalboard-server-linux-amd64.tar.gz
+
+
