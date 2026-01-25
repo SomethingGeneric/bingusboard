@@ -42,7 +42,7 @@ jobs:
         BUILD_NUMBER: ${{ github.run_id }}
 
     - name: Upload server package
-      uses: actions/upload-artifact@2848b2cda0e5190984587ec6bb1f36730ca78d50
+      uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
       with:
         name: focalboard-server-linux-amd64.tar.gz
         path: ${{ github.workspace }}/focalboard/dist/focalboard-server-linux-amd64.tar.gz
