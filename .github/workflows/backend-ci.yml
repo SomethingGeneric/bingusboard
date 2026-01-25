@@ -1,0 +1,35 @@
+name: Backend Checks
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+jobs:
+  server:
+    runs-on: ubuntu-latest
+    env:
+      GOFLAGS: "-tags=json1,sqlite3"
+    defaults:
+      run:
+        working-directory: server
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: server/go.mod
+
+      - name: Download modules
+        run: go mod download
+
+      - name: Vet
+        run: go vet ./...
+
+      - name: Test
+        run: |
+          set -eo pipefail
+          go list ./... | grep -Ev 'services/store/sqlstore|services/store/storetests|integrationtests' | xargs go test
