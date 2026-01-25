@@ -10,7 +10,7 @@ import {getCardComments} from '../store/comments'
 import {ContentBlock} from '../blocks/contentBlock'
 import {CommentBlock} from '../blocks/commentBlock'
 import TextIcon from '../widgets/icons/text'
-import MessageIcon from '../widgets/icons/message'
+import CommentIndicatorIcon from '../widgets/icons/commentIndicator'
 import CheckIcon from '../widgets/icons/check'
 import {Utils} from '../utils'
 
@@ -92,7 +92,7 @@ const CardBadges = (props: Props) => {
                 </span>}
             {badges.comments > 0 &&
                 <span title={intl.formatMessage({id: 'CardBadges.title-comments', defaultMessage: 'Comments'})}>
-                    <MessageIcon/>
+                    <CommentIndicatorIcon/>
                     {badges.comments}
                 </span>}
             {checkboxes.total > 0 &&

@@ -21,9 +21,40 @@ exports[`components/cardBadges should match snapshot 1`] = `
     <span
       title="Comments"
     >
-      <i
-        class="CompassIcon icon-message-text-outline MessageIcon"
-      />
+      <svg
+        aria-hidden="true"
+        class="CommentIndicatorIcon"
+        focusable="false"
+        height="16"
+        viewBox="0 0 16 16"
+        width="16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect
+          fill="currentColor"
+          height="1.5"
+          rx="0.75"
+          width="11"
+          x="2.5"
+          y="4"
+        />
+        <rect
+          fill="currentColor"
+          height="1.5"
+          rx="0.75"
+          width="11"
+          x="2.5"
+          y="7.25"
+        />
+        <rect
+          fill="currentColor"
+          height="1.5"
+          rx="0.75"
+          width="7.5"
+          x="2.5"
+          y="10.5"
+        />
+      </svg>
       3
     </span>
     <span
