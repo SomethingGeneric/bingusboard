@@ -1,15 +1,15 @@
 module github.com/mattermost/focalboard/server
 
-go 1.21
+go 1.23.1
 
-toolchain go1.21.8
+toolchain go1.24.12
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.1
 	github.com/gorilla/websocket v1.5.1
-	github.com/krolaw/zipstream v0.0.0-20180621105154-0a2661891f94
+	github.com/krolaw/zipstream v0.0.0-20241109034754-4a67be70fe31
 	github.com/lib/pq v1.10.9
 	github.com/mattermost/logr/v2 v2.0.21
 	github.com/mattermost/mattermost/server/public v0.1.3
