@@ -107,8 +107,8 @@ The Boards API documentation is available at: <https://htmlpreview.github.io/?ht
 
 * **Documentation**: See [docs/dev-tips.md](docs/dev-tips.md) for detailed development tips
 * **Changes**: See the [CHANGELOG](CHANGELOG.md) for the latest updates
-* **Issues**: [Report bugs or request features](https://github.com/mattermost/focalboard/issues)
-* **Chat**: Join the [Focalboard community channel](https://community.mattermost.com/core/channels/focalboard)
+* **Issues**: [Use the Bingusboard issue tracker](https://github.com/SomethingGeneric/bingusboard/issues)
+* **Discussions**: [Start or join a thread](https://github.com/SomethingGeneric/bingusboard/discussions)
 
 ## License
 

@@ -13,7 +13,7 @@ Check that you have recent versions of the basic dependencies installed:
 
 ## Fork and clone the project source code
 
-Fork the [Focalboard GitHub repo](https://github.com/mattermost/focalboard), and clone it locally.
+Fork this repository on GitHub and clone it locally. If you're looking for the upstream Bingusboard location, visit [https://github.com/SomethingGeneric/bingusboard](https://github.com/SomethingGeneric/bingusboard).
 
 ## Build and run from the terminal
 
@@ -80,7 +80,7 @@ Before checking-in commits, run: `make ci`, which is simlar to the ci.yml workfl
 
 ## Running into problems or have questions?
 
-If you run into any issues with the steps here, or have any general questions, please don't hesitate to reach out either on [GitHub](https://github.com/mattermost/focalboard) or our [Mattermost community channel](https://community.mattermost.com/core/channels/focalboard).
+If you run into any issues with the steps here, or have any general questions, file an issue or discussion at [https://github.com/SomethingGeneric/bingusboard](https://github.com/SomethingGeneric/bingusboard).
 
 We welcome everyone, and appreciate any feedback.
 

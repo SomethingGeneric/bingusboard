@@ -1,5 +1,10 @@
 # Repository Guidelines
 
+## Product Scope
+We are building **Bingusboard**, a lighter-weight fork of the historical Focalboard project. Optimizations or workflows that only matter for the legacy product are out of scope unless they clearly benefit Bingusboard.
+
+Docker is only used for local testing in Bingusboard; production releases rely on the GitHub Actions job that produces a server tarball for non-Docker deployments.
+
 ## Project Structure & Module Organization
 Focalboard pairs a Go personal server with a React/TypeScript web client. Go source sits in `server/`: entrypoint code in `server/main`, domain logic in `server/app` and `server/services`, HTTP handlers in `server/api`, and data contracts in `server/model`, with integration suites under `server/integrationtests`. The web client lives in `webapp/`; UI code resides in `webapp/src`, Cypress specs in `webapp/cypress`, and locale files in `webapp/i18n`. Templates and static bundles ship from `server/assets` and `webapp/pack`.
 

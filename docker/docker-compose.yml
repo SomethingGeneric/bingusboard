@@ -1,17 +1,13 @@
-version: "3"
+version: "3.9"
+
 services:
   app:
-    build:
-      context: ../
-      dockerfile: docker/Dockerfile
+    extends:
+      file: ../docker-compose.yml
+      service: focalboard
     container_name: focalboard
-    volumes:
-      - fbdata:/opt/focalboard/data
     ports:
-      - 80:8000
+      - "80:8000"
     environment:
       - VIRTUAL_HOST=focalboard.local
       - VIRTUAL_PORT=8000
-
-volumes:
-  fbdata:
