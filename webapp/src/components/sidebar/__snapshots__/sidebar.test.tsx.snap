@@ -44,7 +44,7 @@ exports[`components/sidebarSidebar dont show hidden boards 1`] = `
                     />
                   </svg>
                   <span>
-                    Focalboard
+                    Bingusboard
                   </span>
                   <div
                     class="versionFrame"
@@ -245,7 +245,7 @@ exports[`components/sidebarSidebar should assign default category if current boa
                     />
                   </svg>
                   <span>
-                    Focalboard
+                    Bingusboard
                   </span>
                   <div
                     class="versionFrame"
@@ -501,7 +501,7 @@ exports[`components/sidebarSidebar shouldnt do any category assignment is board 
                     />
                   </svg>
                   <span>
-                    Focalboard
+                    Bingusboard
                   </span>
                   <div
                     class="versionFrame"
@@ -912,7 +912,7 @@ exports[`components/sidebarSidebar sidebar hidden 1`] = `
                     />
                   </svg>
                   <span>
-                    Focalboard
+                    Bingusboard
                   </span>
                   <div
                     class="versionFrame"
@@ -1206,7 +1206,7 @@ exports[`components/sidebarSidebar some categories hidden 1`] = `
                     />
                   </svg>
                   <span>
-                    Focalboard
+                    Bingusboard
                   </span>
                   <div
                     class="versionFrame"

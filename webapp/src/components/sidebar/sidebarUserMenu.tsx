@@ -38,7 +38,7 @@ const SidebarUserMenu = () => {
                     <div className='logo'>
                         <div className='logo-title'>
                             <FocalboardLogoIcon/>
-                            <span>{'Focalboard'}</span>
+                            <span>{'Bingusboard'}</span>
                             <div className='versionFrame'>
                                 <div
                                     className='version'
