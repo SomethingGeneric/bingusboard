@@ -328,87 +328,6 @@ exports[`components/sidebar/SidebarSettingsMenu imports menu open should match s
             </div>
             <div>
               <div
-                aria-label="Give feedback"
-                class="MenuOption TextOption menu-option"
-                role="button"
-              >
-                <div
-                  class="d-flex"
-                >
-                  <div
-                    class="noicon"
-                  />
-                </div>
-                <div
-                  class="menu-option__content"
-                >
-                  <div
-                    class="menu-name"
-                  >
-                    Give feedback
-                  </div>
-                </div>
-                <div
-                  class="noicon"
-                />
-              </div>
-            </div>
-            <div>
-              <div
-                aria-label="Give feedback"
-                class="MenuOption TextOption menu-option"
-                role="button"
-              >
-                <div
-                  class="d-flex"
-                >
-                  <div
-                    class="noicon"
-                  />
-                </div>
-                <div
-                  class="menu-option__content"
-                >
-                  <div
-                    class="menu-name"
-                  >
-                    Give feedback
-                  </div>
-                </div>
-                <div
-                  class="noicon"
-                />
-              </div>
-            </div>
-            <div>
-              <div
-                aria-label="Give feedback"
-                class="MenuOption TextOption menu-option"
-                role="button"
-              >
-                <div
-                  class="d-flex"
-                >
-                  <div
-                    class="noicon"
-                  />
-                </div>
-                <div
-                  class="menu-option__content"
-                >
-                  <div
-                    class="menu-name"
-                  >
-                    Give feedback
-                  </div>
-                </div>
-                <div
-                  class="noicon"
-                />
-              </div>
-            </div>
-            <div>
-              <div
                 aria-label="Random icons"
                 class="MenuOption SwitchOption menu-option"
                 role="button"
@@ -1052,6 +971,33 @@ exports[`components/sidebar/SidebarSettingsMenu languages menu open should match
             </div>
             <div>
               <div
+                aria-label="Give feedback"
+                class="MenuOption TextOption menu-option"
+                role="button"
+              >
+                <div
+                  class="d-flex"
+                >
+                  <div
+                    class="noicon"
+                  />
+                </div>
+                <div
+                  class="menu-option__content"
+                >
+                  <div
+                    class="menu-name"
+                  >
+                    Give feedback
+                  </div>
+                </div>
+                <div
+                  class="noicon"
+                />
+              </div>
+            </div>
+            <div>
+              <div
                 aria-label="Random icons"
                 class="MenuOption SwitchOption menu-option"
                 role="button"
@@ -1235,6 +1181,33 @@ exports[`components/sidebar/SidebarSettingsMenu settings menu open should match 
                 </div>
                 <i
                   class="CompassIcon icon-chevron-right"
+                />
+              </div>
+            </div>
+            <div>
+              <div
+                aria-label="Give feedback"
+                class="MenuOption TextOption menu-option"
+                role="button"
+              >
+                <div
+                  class="d-flex"
+                >
+                  <div
+                    class="noicon"
+                  />
+                </div>
+                <div
+                  class="menu-option__content"
+                >
+                  <div
+                    class="menu-name"
+                  >
+                    Give feedback
+                  </div>
+                </div>
+                <div
+                  class="noicon"
                 />
               </div>
             </div>
@@ -1554,6 +1527,33 @@ exports[`components/sidebar/SidebarSettingsMenu theme menu open should match sna
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div>
+              <div
+                aria-label="Give feedback"
+                class="MenuOption TextOption menu-option"
+                role="button"
+              >
+                <div
+                  class="d-flex"
+                >
+                  <div
+                    class="noicon"
+                  />
+                </div>
+                <div
+                  class="menu-option__content"
+                >
+                  <div
+                    class="menu-name"
+                  >
+                    Give feedback
+                  </div>
+                </div>
+                <div
+                  class="noicon"
+                />
               </div>
             </div>
             <div>

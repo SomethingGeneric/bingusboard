@@ -4,6 +4,7 @@ import {render} from '@testing-library/react'
 import React from 'react'
 
 import {wrapDNDIntl} from '../testUtils'
+
 import TopBar from './topBar'
 
 jest.mock('../utils')

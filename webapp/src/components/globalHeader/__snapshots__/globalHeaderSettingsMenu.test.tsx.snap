@@ -306,8 +306,6 @@ exports[`components/sidebar/GlobalHeaderSettingsMenu imports menu open should ma
                 />
               </div>
             </div>
-            <div>
-            </div>
           </div>
           <div
             class="menu-spacer hideOnWidescreen"
@@ -845,13 +843,13 @@ exports[`components/sidebar/GlobalHeaderSettingsMenu languages menu open should 
                           </div>
                         </div>
                         <div
-                class="noicon"
-              />
-            </div>
-          </div>
-          <div
-            class="menu-spacer hideOnWidescreen"
-          />
+                          class="noicon"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="menu-spacer hideOnWidescreen"
+                    />
                     <div
                       class="menu-options hideOnWidescreen"
                     >

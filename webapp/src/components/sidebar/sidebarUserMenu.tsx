@@ -16,13 +16,13 @@ import {useAppSelector, useAppDispatch} from '../../store/hooks'
 
 import ModalWrapper from '../modalWrapper'
 
-import {IAppWindow} from '../../types'
+// import {IAppWindow} from '../../types'
 
 import RegistrationLink from './registrationLink'
 
 import './sidebarUserMenu.scss'
 
-declare let window: IAppWindow
+// declare let window: IAppWindow
 
 const SidebarUserMenu = () => {
     const dispatch = useAppDispatch()

@@ -8,8 +8,7 @@ const TopBar = (): JSX.Element => {
     return (
         <div
             className='TopBar'
-        >
-        </div>
+        />
     )
 }
 

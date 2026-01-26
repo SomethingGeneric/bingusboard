@@ -4,8 +4,7 @@ exports[`src/components/topBar should match snapshot for focalboardPlugin 1`] = 
 <div>
   <div
     class="TopBar"
-  >
-  </div>
+  />
 </div>
 `;
 
@@ -13,7 +12,6 @@ exports[`src/components/topBar should match snapshot for none focalboardPlugin 1
 <div>
   <div
     class="TopBar"
-  >
-  </div>
+  />
 </div>
 `;
