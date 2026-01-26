@@ -1,4 +1,4 @@
-.PHONY: prebuild clean cleanall ci server server-mac server-linux server-win server-linux-package generate watch-server webapp mac-app win-app-wpf linux-app modd-precheck templates-archive
+.PHONY: prebuild clean cleanall ci server server-mac server-linux server-win server-linux-package generate watch-server webapp mac-app win-app-wpf modd-precheck templates-archive
 
 PACKAGE_FOLDER = focalboard
 
@@ -207,19 +207,7 @@ win-wpf-app: server-dll webapp ## Build Windows WPF application.
 	cd win-wpf && ./package.bat
 	cd win-wpf && ./package-zip.bat
 
-linux-app: webapp ## Build Linux application.
-	rm -rf linux/temp
-	rm -rf linux/dist
-	mkdir -p linux/dist
-	mkdir -p linux/temp/focalboard-app
-	cp app-config.json linux/temp/focalboard-app/config.json
-	cp NOTICE.txt linux/temp/focalboard-app/
-	cp webapp/NOTICE.txt linux/temp/focalboard-app/webapp-NOTICE.txt
-	cp -R webapp/pack linux/temp/focalboard-app/pack
-	cd linux; make build
-	cp -R linux/bin/focalboard-app linux/temp/focalboard-app/
-	cd linux/temp; tar -zcf ../dist/focalboard-linux.tar.gz focalboard-app
-	rm -rf linux/temp
+
 
 swagger: ## Generate swagger API spec and clients based on it.
 	mkdir -p server/swagger/docs
@@ -239,7 +227,6 @@ clean: ## Clean build artifacts.
 	rm -rf webapp/pack
 	rm -rf mac/temp
 	rm -rf mac/dist
-	rm -rf linux/dist
 	rm -rf win-wpf/msix
 	rm -f win-wpf/focalboard.msix
 
