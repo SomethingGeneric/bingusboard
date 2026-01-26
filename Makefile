@@ -207,8 +207,6 @@ win-wpf-app: server-dll webapp ## Build Windows WPF application.
 	cd win-wpf && ./package.bat
 	cd win-wpf && ./package-zip.bat
 
-
-
 swagger: ## Generate swagger API spec and clients based on it.
 	mkdir -p server/swagger/docs
 	mkdir -p server/swagger/clients
