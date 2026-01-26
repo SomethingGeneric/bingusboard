@@ -456,17 +456,19 @@ func TestPatchBoard(t *testing.T) {
 
 		// Type not nil, will cause board to be reteived
 		// to check isTemplate
+		// GetBoard is also called within App.GetMembersForBoard
 		th.Store.EXPECT().GetBoard(boardID).Return(&model.Board{
 			ID:         boardID,
 			TeamID:     teamID,
 			IsTemplate: true,
 			ChannelID:  "",
-		}, nil).Times(1)
+		}, nil).Times(2)
 
+		// HasPermissionToTeam is called within App.GetMembersForBoard
 		th.API.EXPECT().HasPermissionToTeam(userID, teamID, model.PermissionManageTeam).Return(false).Times(1)
 
-		// Type not null will retrieve team members
-		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
+		// Type not null will retrieve team members via broadcastTeamUsers
+		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil).Times(1)
 
 		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
@@ -476,8 +478,8 @@ func TestPatchBoard(t *testing.T) {
 			nil)
 
 		// Should call GetMembersForBoard 2 times
-		// for WS BroadcastBoardChange
-		// for AddTeamMembers check
+		// - for WS BroadcastBoardChange (via wsserver calling store directly)
+		// - for broadcastTeamUsers check (via App.GetMembersForBoard)
 		// We are returning the user as a direct Board Member, so BroadcastMemberDelete won't be called
 		th.Store.EXPECT().GetMembersForBoard(boardID).Return([]*model.BoardMember{{BoardID: boardID, UserID: userID, SchemeEditor: true}}, nil).Times(2)
 
