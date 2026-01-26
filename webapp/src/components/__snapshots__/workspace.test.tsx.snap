@@ -47,7 +47,7 @@ exports[`src/components/workspace return workspace and showcard 1`] = `
                       />
                     </svg>
                     <span>
-                      Focalboard
+                      Bingusboard
                     </span>
                     <div
                       class="versionFrame"
@@ -1122,7 +1122,7 @@ exports[`src/components/workspace should match snapshot 1`] = `
                       />
                     </svg>
                     <span>
-                      Focalboard
+                      Bingusboard
                     </span>
                     <div
                       class="versionFrame"
