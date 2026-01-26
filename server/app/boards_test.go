@@ -424,8 +424,9 @@ func TestPatchBoard(t *testing.T) {
 			Type: &patchType,
 		}
 
-		// Type not nil, will cause board to be reteived
-		// to check isTemplate
+		// GetBoard called twice:
+		// 1. Line 325: permission check
+		// 2. Line 471: within App.GetMembersForBoard for team permission checking
 		th.Store.EXPECT().GetBoard(boardID).Return(&model.Board{
 			ID:         boardID,
 			TeamID:     teamID,
@@ -543,8 +544,9 @@ func TestPatchBoard(t *testing.T) {
 			ChannelID: &channelID,
 		}
 
-		// Type not nil, will cause board to be reteived
-		// to check isTemplate
+		// GetBoard called twice:
+		// 1. Line 325: permission check
+		// 2. Line 471: within App.GetMembersForBoard during async callback
 		th.Store.EXPECT().GetBoard(boardID).Return(&model.Board{
 			ID:     boardID,
 			TeamID: teamID,
