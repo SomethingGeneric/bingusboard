@@ -10,6 +10,7 @@
     margin-right: 10px;
     margin-bottom: 10px;
     cursor: pointer;
+    background-color: rgba(var(--center-channel-color-rgb), 0.03);
 
     // HACK: Fixes Chrome drag and drop preview
     transform: translate3d(0, 0, 0);
@@ -19,7 +20,7 @@
     }
 
     &:hover {
-        background-color: rgba(var(--center-channel-color-rgb), 0.05);
+        background-color: rgba(var(--center-channel-color-rgb), 0.08);
 
         .optionsMenu {
             display: block;
