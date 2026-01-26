@@ -249,10 +249,10 @@ func matchBoardPatch(expected *model.BoardPatch) interface{} {
 }
 
 func TestPatchBoard(t *testing.T) {
-	t.Run("base case, title patch", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
+	th, tearDown := SetupTestHelper(t)
+	defer tearDown()
 
+	t.Run("base case, title patch", func(t *testing.T) {
 		const boardID = "board_id_1"
 		const userID = "user_id_1"
 		const teamID = "team_id_1"
@@ -279,9 +279,6 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type open, no users", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -321,9 +318,6 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type private, no users", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -371,9 +365,6 @@ func TestPatchBoard(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			th, tearDown := SetupTestHelper(t)
-			defer tearDown()
-
 			const boardID = "board_id_1"
 			const userID = "user_id_2"
 			const teamID = "team_id_1"
@@ -413,9 +404,6 @@ func TestPatchBoard(t *testing.T) {
 	}
 
 	t.Run("patch type open, user with member", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -457,9 +445,6 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type private, user with member", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -502,9 +487,6 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type channel, user without post permissions", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -530,9 +512,6 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type channel, user with post permissions", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -571,9 +550,6 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type remove channel, user without post permissions", func(t *testing.T) {
-		th, tearDown := SetupTestHelper(t)
-		defer tearDown()
-
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
