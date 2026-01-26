@@ -3,8 +3,6 @@ updates:
   - package-ecosystem: "github-actions"
     directories:
       - "**/*"
-    reviewers:
-      - "mattermost/cloud-sre"
     open-pull-requests-limit: 5
     groups:
       Github Actions updates:
