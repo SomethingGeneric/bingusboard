@@ -7,6 +7,7 @@ import (
 
 	"github.com/mattermost/focalboard/server/model"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/mock"
 )
 
 const (
@@ -51,7 +52,9 @@ func TestPrepareOnboardingTour(t *testing.T) {
 			Type:       model.BoardTypePrivate,
 		}
 		newType := model.BoardTypePrivate
-		th.Store.EXPECT().PatchBoard("board_id_2", &model.BoardPatch{Type: &newType}, "user_id_1").Return(&privateWelcomeBoard, nil)
+		th.Store.EXPECT().PatchBoard("board_id_2", mock.MatchedBy(func(p *model.BoardPatch) bool {
+			return p.Type != nil && *p.Type == newType
+		}), "user_id_1").Return(&privateWelcomeBoard, nil)
 		th.Store.EXPECT().GetMembersForUser("user_id_1").Return([]*model.BoardMember{}, nil)
 
 		userPreferencesPatch := model.UserPreferencesPatch{
@@ -115,7 +118,9 @@ func TestCreateWelcomeBoard(t *testing.T) {
 			Type:       model.BoardTypePrivate,
 		}
 		newType := model.BoardTypePrivate
-		th.Store.EXPECT().PatchBoard("board_id_1", &model.BoardPatch{Type: &newType}, "user_id_1").Return(&privateWelcomeBoard, nil)
+		th.Store.EXPECT().PatchBoard("board_id_1", mock.MatchedBy(func(p *model.BoardPatch) bool {
+			return p.Type != nil && *p.Type == newType
+		}), "user_id_1").Return(&privateWelcomeBoard, nil)
 		th.Store.EXPECT().GetUserCategoryBoards(userID, "team_id").Return([]model.CategoryBoards{
 			{
 				Category: model.Category{ID: "boards_category_id", Name: "Boards"},
