@@ -18,7 +18,7 @@ import CompassIcon from '../../widgets/icons/compassIcon'
 import TelemetryClient, {TelemetryCategory, TelemetryActions} from '../../telemetry/telemetryClient'
 
 import './versionMessage.scss'
-const helpURL = 'https://mattermost.com/pl/whats-new-boards/'
+const helpURL = 'https://github.com/SomethingGeneric/bingusboard/releases'
 
 const VersionMessage = React.memo(() => {
     const intl = useIntl()

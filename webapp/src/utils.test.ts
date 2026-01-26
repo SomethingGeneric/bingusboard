@@ -17,18 +17,18 @@ declare let window: IAppWindow
 describe('utils', () => {
     describe('assureProtocol', () => {
         test('should passthrough on valid short protocol', () => {
-            expect(Utils.ensureProtocol('https://focalboard.com')).toBe('https://focalboard.com')
+            expect(Utils.ensureProtocol('https://bingusboard.dev')).toBe('https://bingusboard.dev')
         })
         test('should passthrough on valid long protocol', () => {
-            expect(Utils.ensureProtocol('somecustomprotocol://focalboard.com')).toBe('somecustomprotocol://focalboard.com')
+            expect(Utils.ensureProtocol('somecustomprotocol://bingusboard.dev')).toBe('somecustomprotocol://bingusboard.dev')
         })
 
         test('should passthrough on valid short protocol', () => {
-            expect(Utils.ensureProtocol('x://focalboard.com')).toBe('x://focalboard.com')
+            expect(Utils.ensureProtocol('x://bingusboard.dev')).toBe('x://bingusboard.dev')
         })
 
         test('should add a https for empty protocol', () => {
-            expect(Utils.ensureProtocol('focalboard.com')).toBe('https://focalboard.com')
+            expect(Utils.ensureProtocol('bingusboard.dev')).toBe('https://bingusboard.dev')
         })
     })
 

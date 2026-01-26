@@ -10,8 +10,8 @@ describe('Card URL Property', () => {
         localStorage.setItem('language', 'en')
     })
 
-    const url = 'https://mattermost.com'
-    const changedURL = 'https://mattermost.com/blog'
+    const url = 'https://example.com'
+    const changedURL = 'https://example.com/blog'
 
     it('Allows to create and edit URL property', () => {
         cy.visit('/')

@@ -158,6 +158,13 @@ const SidebarSettingsMenu = (props: Props) => {
                             )
                         }
                     </Menu.SubMenu>
+                    <Menu.Text
+                        id='give-feedback'
+                        name={intl.formatMessage({id: 'Sidebar.give-feedback', defaultMessage: 'Give feedback'})}
+                        onClick={() => {
+                            window.open('https://github.com/SomethingGeneric/bingusboard/issues', '_blank', 'noopener,noreferrer')
+                        }}
+                    />
                     <Menu.Switch
                         id='random-icons'
                         name={intl.formatMessage({id: 'Sidebar.random-icons', defaultMessage: 'Random icons'})}

@@ -6,8 +6,8 @@
 //	Host: localhost
 //	BasePath: /api/v2
 //	Version: 2.0.0
-//	License: Custom https://github.com/mattermost/focalboard/blob/main/LICENSE.txt
-//	Contact: Focalboard<api@focalboard.com> https://www.focalboard.com
+//	License: Custom https://github.com/SomethingGeneric/bingusboard/blob/main/LICENSE.txt
+//	Contact: Bingusboard<support@somethinggeneric.dev> https://github.com/SomethingGeneric/bingusboard
 //
 //	Consumes:
 //	- application/json

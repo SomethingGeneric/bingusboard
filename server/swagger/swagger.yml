@@ -111,13 +111,13 @@ definitions:
 host: localhost
 info:
     contact:
-        email: api@focalboard.com
-        name: Focalboard
-        url: https://www.focalboard.com
+        email: support@somethinggeneric.dev
+        name: Bingusboard
+        url: https://github.com/SomethingGeneric/bingusboard
     description: Focalboard Server
     license:
         name: Custom
-        url: https://github.com/mattermost/focalboard/blob/main/LICENSE.txt
+        url: https://github.com/SomethingGeneric/bingusboard/blob/main/LICENSE.txt
     title: Focalboard Server
     version: 2.0.0
 paths:

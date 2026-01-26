@@ -19,6 +19,9 @@ import './cardBadges.scss'
 type Props = {
     card: Card
     className?: string
+    showDescription?: boolean
+    showComments?: boolean
+    showCheckboxes?: boolean
 }
 
 type Checkboxes = {
@@ -32,8 +35,16 @@ type Badges = {
     checkboxes: Checkboxes
 }
 
-const hasBadges = (badges: Badges): boolean => {
-    return badges.description || badges.comments > 0 || badges.checkboxes.total > 0
+type BadgeVisibility = {
+    showDescription: boolean
+    showComments: boolean
+    showCheckboxes: boolean
+}
+
+const hasBadges = (badges: Badges, visibility: BadgeVisibility): boolean => {
+    return (visibility.showDescription && badges.description) ||
+        (visibility.showComments && badges.comments > 0) ||
+        (visibility.showCheckboxes && badges.checkboxes.total > 0)
 }
 
 type ContentsType = Array<ContentBlock | ContentBlock[]>
@@ -75,27 +86,38 @@ const calculateBadges = (contents: ContentsType, comments: CommentBlock[]): Badg
 }
 
 const CardBadges = (props: Props) => {
-    const {card, className} = props
+    const {
+        card,
+        className,
+        showDescription = true,
+        showComments = true,
+        showCheckboxes = true,
+    } = props
     const contents = useAppSelector(getCardContents(card.id))
     const comments = useAppSelector(getCardComments(card.id))
     const badges = useMemo(() => calculateBadges(contents, comments), [contents, comments])
-    if (!hasBadges(badges)) {
+    const visibility = {
+        showDescription,
+        showComments,
+        showCheckboxes,
+    }
+    if (!hasBadges(badges, visibility)) {
         return null
     }
     const intl = useIntl()
     const {checkboxes} = badges
     return (
         <div className={`CardBadges ${className || ''}`}>
-            {badges.description &&
+            {showDescription && badges.description &&
                 <span title={intl.formatMessage({id: 'CardBadges.title-description', defaultMessage: 'This card has a description'})}>
                     <TextIcon/>
                 </span>}
-            {badges.comments > 0 &&
+            {showComments && badges.comments > 0 &&
                 <span title={intl.formatMessage({id: 'CardBadges.title-comments', defaultMessage: 'Comments'})}>
                     <CommentIndicatorIcon/>
                     {badges.comments}
                 </span>}
-            {checkboxes.total > 0 &&
+            {showCheckboxes && checkboxes.total > 0 &&
                 <span title={intl.formatMessage({id: 'CardBadges.title-checkboxes', defaultMessage: 'Checkboxes'})}>
                     <CheckIcon/>
                     {`${checkboxes.checked}/${checkboxes.total}`}

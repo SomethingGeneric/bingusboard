@@ -186,7 +186,12 @@ const KanbanCard = (props: Props) => {
                         />
                     </Tooltip>
                 ))}
-                {props.visibleBadges && <CardBadges card={card}/>}
+                <CardBadges
+                    card={card}
+                    showDescription={props.visibleBadges}
+                    showComments={true}
+                    showCheckboxes={props.visibleBadges}
+                />
             </div>
 
             {showConfirmationDialogBox && <ConfirmationDialogBox dialogBox={confirmDialogProps}/>}

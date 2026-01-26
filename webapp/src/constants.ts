@@ -40,37 +40,37 @@ class Constants {
     static readonly versionString = '8.0.0'
     static readonly versionDisplayString = 'June 2024'
 
-    static readonly archiveHelpPage = 'https://docs.mattermost.com/boards/migrate-to-boards.html'
+    static readonly archiveHelpPage = 'https://github.com/SomethingGeneric/bingusboard'
     static readonly imports = [
         {
             id: 'trello',
             displayName: 'Trello',
             telemetryName: TelemetryActions.ImportTrello,
-            href: Constants.archiveHelpPage + '#import-from-trello',
+            href: Constants.archiveHelpPage,
         },
         {
             id: 'asana',
             displayName: 'Asana',
             telemetryName: TelemetryActions.ImportAsana,
-            href: Constants.archiveHelpPage + '#import-from-asana',
+            href: Constants.archiveHelpPage,
         },
         {
             id: 'notion',
             displayName: 'Notion',
             telemetryName: TelemetryActions.ImportNotion,
-            href: Constants.archiveHelpPage + '#import-from-notion',
+            href: Constants.archiveHelpPage,
         },
         {
             id: 'jira',
             displayName: 'Jira',
             telemetryName: TelemetryActions.ImportJira,
-            href: Constants.archiveHelpPage + '#import-from-jira',
+            href: Constants.archiveHelpPage,
         },
         {
             id: 'todoist',
             displayName: 'Todoist',
             telemetryName: TelemetryActions.ImportTodoist,
-            href: Constants.archiveHelpPage + '#import-from-todoist',
+            href: Constants.archiveHelpPage,
         },
     ]
 

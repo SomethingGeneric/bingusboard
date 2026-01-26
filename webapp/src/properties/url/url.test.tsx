@@ -54,7 +54,7 @@ describe('properties/link', () => {
         const {container} = render(wrapIntl((
             <Url
                 {...baseData}
-                propertyValue='https://github.com/mattermost/focalboard'
+                propertyValue='https://github.com/SomethingGeneric/bingusboard'
             />
         )))
         expect(container).toMatchSnapshot()
@@ -64,7 +64,7 @@ describe('properties/link', () => {
         const {container} = render(wrapIntl((
             <Url
                 {...baseData}
-                propertyValue='https://github.com/mattermost/focalboard'
+                propertyValue='https://github.com/SomethingGeneric/bingusboard'
                 readOnly={true}
             />
         )))
@@ -81,7 +81,7 @@ describe('properties/link', () => {
             ),
         )
 
-        const url = 'https://mattermost.com'
+        const url = 'https://example.com'
         const input = screen.getByRole('textbox')
         userEvent.type(input, `${url}{enter}`)
 
@@ -93,13 +93,13 @@ describe('properties/link', () => {
             wrapIntl(
                 <Url
                     {...baseData}
-                    propertyValue='https://mattermost.com'
+                    propertyValue='https://example.com'
                 />,
             ),
         )
 
         screen.getByRole('button', {name: 'Edit'}).click()
-        const newURL = 'https://github.com/mattermost'
+        const newURL = 'https://github.com/SomethingGeneric'
         const input = screen.getByRole('textbox')
         userEvent.clear(input)
         userEvent.type(input, `${newURL}{enter}`)
@@ -107,7 +107,7 @@ describe('properties/link', () => {
     })
 
     it('should allow to copy url', () => {
-        const url = 'https://mattermost.com'
+        const url = 'https://example.com'
         render(
             wrapIntl(
                 <Url

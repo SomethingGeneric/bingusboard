@@ -48,4 +48,10 @@
             color: rgba(var(--sidebar-text-rgb), 0.8);
         }
     }
+
+    .MenuWrapper {
+        .menu-contents {
+            padding-bottom: 0;
+        }
+    }
 }
