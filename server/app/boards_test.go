@@ -136,6 +136,28 @@ func TestAddMemberToBoard(t *testing.T) {
 	})
 }
 
+// Helper functions for comparing maps and slices, treating nil and empty as equal
+func mapsEqual(a, b map[string]interface{}) bool {
+	if len(a) == 0 && len(b) == 0 {
+		return true
+	}
+	return reflect.DeepEqual(a, b)
+}
+
+func slicesEqual(a, b []string) bool {
+	if len(a) == 0 && len(b) == 0 {
+		return true
+	}
+	return reflect.DeepEqual(a, b)
+}
+
+func slicesOfMapsEqual(a, b []map[string]interface{}) bool {
+	if len(a) == 0 && len(b) == 0 {
+		return true
+	}
+	return reflect.DeepEqual(a, b)
+}
+
 type boardPatchMatcher struct {
 	expected *model.BoardPatch
 }
@@ -196,28 +218,22 @@ func (m boardPatchMatcher) Matches(arg interface{}) bool {
 		}
 	}
 
-	if len(expected.UpdatedProperties) > 0 {
-		if !reflect.DeepEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
-			return false
-		}
+	// For maps and slices, we need to handle nil vs empty comparisons
+	// A nil map/slice and an empty map/slice should be considered equal
+	if !mapsEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
+		return false
 	}
 
-	if len(expected.DeletedProperties) > 0 {
-		if !reflect.DeepEqual(expected.DeletedProperties, actual.DeletedProperties) {
-			return false
-		}
+	if !slicesEqual(expected.DeletedProperties, actual.DeletedProperties) {
+		return false
 	}
 
-	if len(expected.UpdatedCardProperties) > 0 {
-		if !reflect.DeepEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
-			return false
-		}
+	if !slicesOfMapsEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
+		return false
 	}
 
-	if len(expected.DeletedCardProperties) > 0 {
-		if !reflect.DeepEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
-			return false
-		}
+	if !slicesEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
+		return false
 	}
 
 	return true
@@ -233,10 +249,10 @@ func matchBoardPatch(expected *model.BoardPatch) interface{} {
 }
 
 func TestPatchBoard(t *testing.T) {
-	th, tearDown := SetupTestHelper(t)
-	defer tearDown()
-
 	t.Run("base case, title patch", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_1"
 		const teamID = "team_id_1"
@@ -263,6 +279,9 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type open, no users", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -302,6 +321,9 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type private, no users", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -349,6 +371,9 @@ func TestPatchBoard(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
+			th, tearDown := SetupTestHelper(t)
+			defer tearDown()
+
 			const boardID = "board_id_1"
 			const userID = "user_id_2"
 			const teamID = "team_id_1"
@@ -388,6 +413,9 @@ func TestPatchBoard(t *testing.T) {
 	}
 
 	t.Run("patch type open, user with member", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -429,6 +457,9 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type private, user with member", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -471,6 +502,9 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type channel, user without post permissions", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -496,6 +530,9 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type channel, user with post permissions", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
@@ -534,6 +571,9 @@ func TestPatchBoard(t *testing.T) {
 	})
 
 	t.Run("patch type remove channel, user without post permissions", func(t *testing.T) {
+		th, tearDown := SetupTestHelper(t)
+		defer tearDown()
+
 		const boardID = "board_id_1"
 		const userID = "user_id_2"
 		const teamID = "team_id_1"
