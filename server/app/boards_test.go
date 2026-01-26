@@ -1,6 +1,7 @@
 package app
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/mattermost/focalboard/server/utils"
@@ -135,6 +136,96 @@ func TestAddMemberToBoard(t *testing.T) {
 	})
 }
 
+// matchBoardPatch creates a mock matcher for comparing BoardPatch fields
+func matchBoardPatch(expected *model.BoardPatch) interface{} {
+	return mock.MatchedBy(func(actual *model.BoardPatch) bool {
+		if actual == nil {
+			return expected == nil
+		}
+		if expected == nil {
+			return false
+		}
+
+		// Compare Type
+		if (expected.Type == nil) != (actual.Type == nil) {
+			return false
+		}
+		if expected.Type != nil && *expected.Type != *actual.Type {
+			return false
+		}
+
+		// Compare MinimumRole
+		if (expected.MinimumRole == nil) != (actual.MinimumRole == nil) {
+			return false
+		}
+		if expected.MinimumRole != nil && *expected.MinimumRole != *actual.MinimumRole {
+			return false
+		}
+
+		// Compare Title
+		if (expected.Title == nil) != (actual.Title == nil) {
+			return false
+		}
+		if expected.Title != nil && *expected.Title != *actual.Title {
+			return false
+		}
+
+		// Compare Description
+		if (expected.Description == nil) != (actual.Description == nil) {
+			return false
+		}
+		if expected.Description != nil && *expected.Description != *actual.Description {
+			return false
+		}
+
+		// Compare Icon
+		if (expected.Icon == nil) != (actual.Icon == nil) {
+			return false
+		}
+		if expected.Icon != nil && *expected.Icon != *actual.Icon {
+			return false
+		}
+
+		// Compare ShowDescription
+		if (expected.ShowDescription == nil) != (actual.ShowDescription == nil) {
+			return false
+		}
+		if expected.ShowDescription != nil && *expected.ShowDescription != *actual.ShowDescription {
+			return false
+		}
+
+		// Compare ChannelID
+		if (expected.ChannelID == nil) != (actual.ChannelID == nil) {
+			return false
+		}
+		if expected.ChannelID != nil && *expected.ChannelID != *actual.ChannelID {
+			return false
+		}
+
+		// Compare UpdatedProperties
+		if !reflect.DeepEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
+			return false
+		}
+
+		// Compare DeletedProperties
+		if !reflect.DeepEqual(expected.DeletedProperties, actual.DeletedProperties) {
+			return false
+		}
+
+		// Compare UpdatedCardProperties
+		if !reflect.DeepEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
+			return false
+		}
+
+		// Compare DeletedCardProperties
+		if !reflect.DeepEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
+			return false
+		}
+
+		return true
+	})
+}
+
 func TestPatchBoard(t *testing.T) {
 	th, tearDown := SetupTestHelper(t)
 	defer tearDown()
@@ -149,7 +240,7 @@ func TestPatchBoard(t *testing.T) {
 			Title: &patchTitle,
 		}
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
 				ID:     boardID,
 				TeamID: teamID,
@@ -187,7 +278,7 @@ func TestPatchBoard(t *testing.T) {
 		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{}, nil)
 		th.Store.EXPECT().GetUserByID(userID).Return(&model.User{ID: userID, Username: "UserName"}, nil)
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
 				ID:     boardID,
 				TeamID: teamID,
@@ -225,7 +316,7 @@ func TestPatchBoard(t *testing.T) {
 		// Type not null will retrieve team members
 		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{}, nil)
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
 				ID:     boardID,
 				TeamID: teamID,
@@ -271,7 +362,7 @@ func TestPatchBoard(t *testing.T) {
 			// Type not null will retrieve team members
 			th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
 
-			th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+			th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 				&model.Board{
 					ID:     boardID,
 					TeamID: teamID,
@@ -313,7 +404,7 @@ func TestPatchBoard(t *testing.T) {
 		// Type not null will retrieve team members
 		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
 				ID:     boardID,
 				TeamID: teamID,
@@ -355,7 +446,7 @@ func TestPatchBoard(t *testing.T) {
 		// Type not null will retrieve team members
 		th.Store.EXPECT().GetUsersByTeam(teamID, "", false, false).Return([]*model.User{{ID: userID}}, nil)
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
 				ID:     boardID,
 				TeamID: teamID,
@@ -417,7 +508,7 @@ func TestPatchBoard(t *testing.T) {
 
 		th.API.EXPECT().HasPermissionToChannel(userID, channelID, model.PermissionCreatePost).Return(true).Times(1)
 
-		th.Store.EXPECT().PatchBoard(boardID, patch, userID).Return(
+		th.Store.EXPECT().PatchBoard(boardID, matchBoardPatch(patch), userID).Return(
 			&model.Board{
 				ID:     boardID,
 				TeamID: teamID,
