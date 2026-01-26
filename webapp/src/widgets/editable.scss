@@ -7,6 +7,10 @@
 
     &.active {
         min-width: 100px;
+        background-color: rgba(var(--center-channel-color-rgb), 0.04);
+        border: 1px solid rgba(var(--center-channel-color-rgb), 0.16);
+        border-radius: var(--default-rad);
+        padding: 2px 4px;
     }
 
     &::placeholder {
