@@ -136,6 +136,28 @@ func TestAddMemberToBoard(t *testing.T) {
 	})
 }
 
+// Helper functions for comparing maps and slices, treating nil and empty as equal
+func mapsEqual(a, b map[string]interface{}) bool {
+	if len(a) == 0 && len(b) == 0 {
+		return true
+	}
+	return reflect.DeepEqual(a, b)
+}
+
+func slicesEqual(a, b []string) bool {
+	if len(a) == 0 && len(b) == 0 {
+		return true
+	}
+	return reflect.DeepEqual(a, b)
+}
+
+func slicesOfMapsEqual(a, b []map[string]interface{}) bool {
+	if len(a) == 0 && len(b) == 0 {
+		return true
+	}
+	return reflect.DeepEqual(a, b)
+}
+
 type boardPatchMatcher struct {
 	expected *model.BoardPatch
 }
@@ -196,28 +218,22 @@ func (m boardPatchMatcher) Matches(arg interface{}) bool {
 		}
 	}
 
-	if len(expected.UpdatedProperties) > 0 {
-		if !reflect.DeepEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
-			return false
-		}
+	// For maps and slices, we need to handle nil vs empty comparisons
+	// A nil map/slice and an empty map/slice should be considered equal
+	if !mapsEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
+		return false
 	}
 
-	if len(expected.DeletedProperties) > 0 {
-		if !reflect.DeepEqual(expected.DeletedProperties, actual.DeletedProperties) {
-			return false
-		}
+	if !slicesEqual(expected.DeletedProperties, actual.DeletedProperties) {
+		return false
 	}
 
-	if len(expected.UpdatedCardProperties) > 0 {
-		if !reflect.DeepEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
-			return false
-		}
+	if !slicesOfMapsEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
+		return false
 	}
 
-	if len(expected.DeletedCardProperties) > 0 {
-		if !reflect.DeepEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
-			return false
-		}
+	if !slicesEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
+		return false
 	}
 
 	return true

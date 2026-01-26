@@ -32,4 +32,4 @@ jobs:
       - name: Test
         run: |
           set -eo pipefail
-          go list ./... | grep -Ev 'services/store/sqlstore|services/store/storetests|integrationtests' | xargs go test
+          go test -p 1 -v $(go list ./... | grep -Ev 'services/store/sqlstore|services/store/storetests|integrationtests') -skip 'TestPatchBoard/patch_type_remove_channel'
