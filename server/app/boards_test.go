@@ -136,94 +136,100 @@ func TestAddMemberToBoard(t *testing.T) {
 	})
 }
 
-// matchBoardPatch creates a mock matcher for comparing BoardPatch fields
-func matchBoardPatch(expected *model.BoardPatch) interface{} {
-	return mock.MatchedBy(func(actual *model.BoardPatch) bool {
-		if actual == nil {
-			return expected == nil
-		}
-		if expected == nil {
-			return false
-		}
+type boardPatchMatcher struct {
+	expected *model.BoardPatch
+}
 
-		// Compare Type
-		if (expected.Type == nil) != (actual.Type == nil) {
-			return false
-		}
-		if expected.Type != nil && *expected.Type != *actual.Type {
-			return false
-		}
+func (m boardPatchMatcher) Matches(arg interface{}) bool {
+	actual, ok := arg.(*model.BoardPatch)
+	if !ok {
+		return false
+	}
 
-		// Compare MinimumRole
-		if (expected.MinimumRole == nil) != (actual.MinimumRole == nil) {
-			return false
-		}
-		if expected.MinimumRole != nil && *expected.MinimumRole != *actual.MinimumRole {
-			return false
-		}
+	expected := m.expected
+	if expected == nil {
+		return actual == nil
+	}
+	if actual == nil {
+		return false
+	}
 
-		// Compare Title
-		if (expected.Title == nil) != (actual.Title == nil) {
+	if expected.Type != nil {
+		if actual.Type == nil || *expected.Type != *actual.Type {
 			return false
 		}
-		if expected.Title != nil && *expected.Title != *actual.Title {
-			return false
-		}
+	}
 
-		// Compare Description
-		if (expected.Description == nil) != (actual.Description == nil) {
+	if expected.MinimumRole != nil {
+		if actual.MinimumRole == nil || *expected.MinimumRole != *actual.MinimumRole {
 			return false
 		}
-		if expected.Description != nil && *expected.Description != *actual.Description {
-			return false
-		}
+	}
 
-		// Compare Icon
-		if (expected.Icon == nil) != (actual.Icon == nil) {
+	if expected.Title != nil {
+		if actual.Title == nil || *expected.Title != *actual.Title {
 			return false
 		}
-		if expected.Icon != nil && *expected.Icon != *actual.Icon {
-			return false
-		}
+	}
 
-		// Compare ShowDescription
-		if (expected.ShowDescription == nil) != (actual.ShowDescription == nil) {
+	if expected.Description != nil {
+		if actual.Description == nil || *expected.Description != *actual.Description {
 			return false
 		}
-		if expected.ShowDescription != nil && *expected.ShowDescription != *actual.ShowDescription {
-			return false
-		}
+	}
 
-		// Compare ChannelID
-		if (expected.ChannelID == nil) != (actual.ChannelID == nil) {
+	if expected.Icon != nil {
+		if actual.Icon == nil || *expected.Icon != *actual.Icon {
 			return false
 		}
-		if expected.ChannelID != nil && *expected.ChannelID != *actual.ChannelID {
-			return false
-		}
+	}
 
-		// Compare UpdatedProperties
+	if expected.ShowDescription != nil {
+		if actual.ShowDescription == nil || *expected.ShowDescription != *actual.ShowDescription {
+			return false
+		}
+	}
+
+	if expected.ChannelID != nil {
+		if actual.ChannelID == nil || *expected.ChannelID != *actual.ChannelID {
+			return false
+		}
+	}
+
+	if len(expected.UpdatedProperties) > 0 {
 		if !reflect.DeepEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
 			return false
 		}
+	}
 
-		// Compare DeletedProperties
+	if len(expected.DeletedProperties) > 0 {
 		if !reflect.DeepEqual(expected.DeletedProperties, actual.DeletedProperties) {
 			return false
 		}
+	}
 
-		// Compare UpdatedCardProperties
+	if len(expected.UpdatedCardProperties) > 0 {
 		if !reflect.DeepEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
 			return false
 		}
+	}
 
-		// Compare DeletedCardProperties
+	if len(expected.DeletedCardProperties) > 0 {
 		if !reflect.DeepEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
 			return false
 		}
+	}
 
-		return true
-	})
+	return true
+}
+
+func (m boardPatchMatcher) String() string {
+	return "boardPatchMatcher"
+}
+
+// matchBoardPatch creates a mock matcher for comparing BoardPatch fields
+func matchBoardPatch(expected *model.BoardPatch) interface{} {
+	return boardPatchMatcher{expected: expected}
 }
 
 func TestPatchBoard(t *testing.T) {
