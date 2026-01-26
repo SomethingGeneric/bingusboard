@@ -1,6 +1,7 @@
 package app
 
 import (
+	"reflect"
 	"testing"
 
 	"github.com/mattermost/focalboard/server/utils"
@@ -198,6 +199,26 @@ func matchBoardPatch(expected *model.BoardPatch) interface{} {
 			return false
 		}
 		if expected.ChannelID != nil && *expected.ChannelID != *actual.ChannelID {
+			return false
+		}
+
+		// Compare UpdatedProperties
+		if !reflect.DeepEqual(expected.UpdatedProperties, actual.UpdatedProperties) {
+			return false
+		}
+
+		// Compare DeletedProperties
+		if !reflect.DeepEqual(expected.DeletedProperties, actual.DeletedProperties) {
+			return false
+		}
+
+		// Compare UpdatedCardProperties
+		if !reflect.DeepEqual(expected.UpdatedCardProperties, actual.UpdatedCardProperties) {
+			return false
+		}
+
+		// Compare DeletedCardProperties
+		if !reflect.DeepEqual(expected.DeletedCardProperties, actual.DeletedCardProperties) {
 			return false
 		}
 
