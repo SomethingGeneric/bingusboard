@@ -37,7 +37,7 @@ Before you begin, ensure you have the following installed:
 
 2. **(Optional) Create an `.env` file** in the project root if excluding enterprise features:
    ```bash
-   echo 'EXCLUDE_ENTERPRISE=1' > .env
+   echo EXCLUDE_ENTERPRISE=1 > .env
    ```
 
 3. **Install dependencies and build**
@@ -93,7 +93,7 @@ The server can be configured via `config.json` in the project root. Key settings
 - **`webpath`**: Path to webapp bundle (default: `./webapp/pack`)
 - **`filespath`**: File upload storage location (default: `./files`)
 
-For a full list of configuration options, see the example `config.json` in the project root. The `server-config.json` file provides an example configuration for running the server from the `server/` directory during development.
+For a full list of configuration options, see the example `config.json` in the project root. Note: `server-config.json` uses a relative `webpath` (`./pack`) for running the server directly from the `server/` directory during development, while `config.json` uses `./webapp/pack` for running from the project root.
 
 ## 🧪 Testing
 
@@ -137,7 +137,7 @@ npm run cypress:ci           # Run Cypress E2E tests
 cd webapp && npm run check                    # Check for issues
 cd webapp && npm run fix                      # Auto-fix JS/TS issues
 cd webapp && npm run fix:scss                 # Auto-fix SCSS issues
-cd server && golangci-lint run ./...          # Lint Go code (install golangci-lint separately)
+cd server && golangci-lint run ./...          # Lint Go code (requires golangci-lint: https://golangci-lint.run/usage/install/)
 ```
 
 ## 📁 Project Structure
