@@ -8,7 +8,7 @@ require (
 	github.com/Masterminds/squirrel v1.5.4
 	github.com/golang/mock v1.6.0
 	github.com/gorilla/mux v1.8.1
-	github.com/gorilla/websocket v1.5.1
+	github.com/gorilla/websocket v1.5.3
 	github.com/krolaw/zipstream v0.0.0-20241109034754-4a67be70fe31
 	github.com/lib/pq v1.10.9
 	github.com/mattermost/logr/v2 v2.0.21
