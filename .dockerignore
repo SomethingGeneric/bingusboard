@@ -6,6 +6,5 @@ node_modules
 mac/
 win-wpf/
 website/
-linux/
 go.work
 go.work.sum

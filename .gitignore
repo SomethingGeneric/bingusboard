@@ -61,9 +61,6 @@ mac/resources/config.json
 mac/temp
 mac/dist
 mac/*.xcodeproj/**/xcuserdata
-linux/bin
-linux/dist
-linux/temp
 win/temp
 win/dist
 webapp/cypress/screenshots
