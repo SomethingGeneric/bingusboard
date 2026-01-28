@@ -10,7 +10,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/mattermost/focalboard/server v0.0.0-20250611133005-a84bbb65e32e
 	github.com/mattermost/mattermost/server/public v0.1.3
-	github.com/webview/webview v0.0.0-20220314230258-a2b7746141c3
+	github.com/webview/webview 5c5db3f31bf6
 )
 
 require (
