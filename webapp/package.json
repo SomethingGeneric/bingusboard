@@ -135,7 +135,7 @@
 		"eslint-plugin-babel": "^5.3.1",
 		"eslint-plugin-cypress": "2.12.1",
 		"eslint-plugin-header": "3.1.1",
-		"eslint-plugin-import": "2.25.4",
+		"eslint-plugin-import": "2.32.0",
 		"eslint-plugin-jquery": "1.5.1",
 		"eslint-plugin-mattermost": "github:mattermost/eslint-plugin-mattermost#a30406de0568fc69b816337eeff64053528e7616",
 		"eslint-plugin-no-only-tests": "2.6.0",
