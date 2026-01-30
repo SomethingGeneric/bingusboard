@@ -139,7 +139,7 @@
 		"eslint-plugin-jquery": "1.5.1",
 		"eslint-plugin-mattermost": "github:mattermost/eslint-plugin-mattermost#a30406de0568fc69b816337eeff64053528e7616",
 		"eslint-plugin-no-only-tests": "2.6.0",
-		"eslint-plugin-react": "7.29.4",
+		"eslint-plugin-react": "7.37.5",
 		"fetch-mock-jest": "^1.5.1",
 		"file-loader": "^6.2.0",
 		"html-webpack-plugin": "^5.5.0",
