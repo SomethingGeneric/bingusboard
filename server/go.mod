@@ -2,7 +2,7 @@ module github.com/mattermost/focalboard/server
 
 go 1.23.1
 
-toolchain go1.24.12
+toolchain go1.25.6
 
 require (
 	github.com/Masterminds/squirrel v1.5.4
