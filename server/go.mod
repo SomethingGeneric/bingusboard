@@ -12,7 +12,7 @@ require (
 	github.com/krolaw/zipstream v0.0.0-20241109034754-4a67be70fe31
 	github.com/lib/pq v1.10.9
 	github.com/mattermost/logr/v2 v2.0.22
-	github.com/mattermost/mattermost/server/public v0.1.3
+	github.com/mattermost/mattermost/server/public v0.1.22
 	github.com/mattermost/mattermost/server/v8 v8.0.0-20240529104128-9d30a62c9471
 	github.com/mattermost/morph v1.1.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
