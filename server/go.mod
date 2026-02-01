@@ -13,7 +13,7 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/mattermost/logr/v2 v2.0.22
 	github.com/mattermost/mattermost/server/public v0.1.3
-	github.com/mattermost/mattermost/server/v8 v8.0.0-20240529104128-9d30a62c9471
+	github.com/mattermost/mattermost/server/v8 v8.0.0-20260131200925-8db2ef6b9f9d
 	github.com/mattermost/morph v1.1.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/mgdelacroix/foundation v0.0.0-20230510073833-0660207768ef
